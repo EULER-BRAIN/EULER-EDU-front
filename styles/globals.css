@@ -1,11 +1,11 @@
 * {
   padding: 0px;
   margin: 0px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 html, body {
   width: 100%; height: 100%;
+  font-family: "NanumBarunGothicLight", sans-serif;
+  font-size: 15px;
 }
 
 a {
@@ -49,4 +49,17 @@ button:focus{
   -webkit-user-select: none;
   -khtml-user-select: none;
   user-select:none;
+}
+
+.FBold {
+  font-family: "NanumBarunGothicBold", sans-serif;
+}
+.FRegular {
+  font-family: "NanumBarunGothic", sans-serif;
+}
+.FLight {
+  font-family: "NanumBarunGothicLight", sans-serif;
+}
+.FExtraLight {
+  font-family: "NanumBarunGothicExtraLight", sans-serif;
 }
