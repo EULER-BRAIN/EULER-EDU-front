@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Main from '@components/Main/Main'
+import SubMain from '@components/Main/SubMain'
 
 export default function() {
   return (
@@ -7,7 +7,7 @@ export default function() {
       <Head>
         <title>오일러EDU</title>
       </Head>
-      <Main />
+      <SubMain />
     </div>
   )
 }
