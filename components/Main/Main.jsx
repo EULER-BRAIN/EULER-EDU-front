@@ -10,11 +10,17 @@ import Footer from '@components/Footer/Footer'
 import axiosOJ from '@tools/axiosOJ'
 import error from '@tools/error'
 
+const CampusItem = (props) => {
+
+}
 const Campus = () => {
   return (
     <RLayout>
       <div style={{ height: '15px' }}/>
       <Layout.Title>캠퍼스 바로가기</Layout.Title>
+      { /* for test */ }
+      모바일 / 웹버전 디자인이 다름<br />
+      학원 비전?
     </RLayout>
   )
 }
@@ -44,7 +50,7 @@ const BookItem = (props) => {
       <div style={ styleImgcontainer }>
         <img style={ styleImg } />
       </div>
-      <div style={{ height: '10px' }}/>
+      <div style={{ height: '6px' }}/>
       <div className="FLight">{ props.name }</div>
     </div>
   )
@@ -65,7 +71,7 @@ const Books = () => {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
       }} ref={ contRef }>
-        { items.map(item => <BookItem { ...item } width={ contWidth / 2 - 5 } />) }
+        { items.map(item => <BookItem { ...item } width={ contWidth / 2 - 7 } />) }
       </div>
     </RLayout>
   )
@@ -74,7 +80,8 @@ const Books = () => {
 const YotubeItem = (props) => {
   return (
     <div style={{
-      width: `${ props.width }px`
+      width: `${ props.width }px`,
+      overflow: 'hidden'
     }}>
       <a
         href={ `https://youtu.be/${ props.id }` }
@@ -83,10 +90,14 @@ const YotubeItem = (props) => {
         <img
           src={ props.img }
           style={{
-            width: props.width
+            width: `${ props.width }px`
           }}
         />
-        <div>
+        <div style={{
+          lineHeight: '19px', height: '57px',
+          fontSize: '14px',
+          overflow: 'hidden'
+        }} className="FLight">
           { props.title }
         </div>
       </a>
@@ -119,7 +130,6 @@ const EulerTV = () => {
     })
   }, []);
 
-  console.log(items)
   return (
     <RLayout>
       <div style={{ height: '15px' }}/>
@@ -129,8 +139,9 @@ const EulerTV = () => {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-      }}>
-        { items.map(item => <YotubeItem { ...item } width={ contWidth / 2 - 5 } />) }
+        rowGap: '14px'
+      }} ref={ contRef }>
+        { items.map(item => <YotubeItem { ...item } width={ contWidth / 2 - 7 } />) }
       </div>
     </RLayout>
   )

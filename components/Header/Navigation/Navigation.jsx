@@ -48,7 +48,11 @@ const BarItem = (props) => {
   }
   else {
     return (
-      <a href={ props.href }>
+      <a
+        href={ props.href }
+        target="_blank"
+        rel="noreferrer"
+      >
         { body }
       </a>
     )
@@ -76,19 +80,19 @@ const Bar = (props) => {
         onClick={ props.onClose }
       >선생님 로그인</BarItem>
       <BarItem
-        href={ '' }
+        link="/awards"
         onClick={ props.onClose }
-      >축하합니다</BarItem>
+      >어워드</BarItem>
       <BarItem
-        href={ '' }
+        href="https://smartstore.naver.com/eulerbooks"
         onClick={ props.onClose }
       >오일러BOOKS</BarItem>
       <BarItem
-        href={ '' }
+        href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ"
         onClick={ props.onClose }
       >오일러TV</BarItem>
       <BarItem
-        href={ '' }
+        href="https://euleroj.io/"
         onClick={ props.onClose }
       >오일러OJ</BarItem>
       <div style={{ height: '70px' }} />
