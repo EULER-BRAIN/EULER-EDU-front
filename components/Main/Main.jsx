@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import RLayout from '@components/Layout/RLayout'
 import Layout from './Layout'
@@ -11,17 +12,70 @@ import axiosOJ from '@tools/axiosOJ'
 import error from '@tools/error'
 
 const CampusItem = (props) => {
-
+  const style = {
+    position: 'relative',
+    height: '70px', width: '170px',
+    overflow: 'hidden'
+  }
+  const styleImgCont = {
+    position: 'absolute',
+    top: '0px', left: '0px',
+    width: '70px', height: '70px',
+    borderRadius: '35px',
+    background: 'rgb(200,200,200)',
+    overflow: 'hidden'
+  }
+  const styleBody = {
+    position: 'absolute',
+    top: '0px', bottom: '0px',
+    left: '80px', right: '0px'
+  }
+  return (
+    <div style={ style }>
+      <Link href={ `/main/${ props.id }` }>
+        <a>
+          <div style={ styleImgCont }>
+          </div>
+        </a>
+      </Link>
+      <div style={ styleBody }>
+        <Link href={ `/main/${ props.id }` }>
+          <a>
+            <div style={{
+              fontSize: '15px',
+              color: 'rgb(50,50,50)',
+              lineHeight: '18px', height: '18px',
+              paddingTop: '7px'
+            }} className="FBold">수원 영통점</div>
+            <div style={{
+              fontSize: '13px',
+              color: 'rgb(50,50,50)',
+              wordBreak: 'keep-all',
+              lineHeight: '16px', height: '32px',
+              marginTop: '3px'
+            }} className="FLight">경기 수원시 영통구 영통동</div>
+          </a>
+        </Link>
+      </div>
+    </div>
+  )
 }
 const Campus = () => {
+  const campusList = [<CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>];
   return (
-    <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>캠퍼스 바로가기</Layout.Title>
-      { /* for test */ }
-      모바일 / 웹버전 디자인이 다름<br />
-      학원 비전?
-    </RLayout>
+    <div>
+      <RLayout>
+        <div style={{ height: '15px' }}/>
+        <Layout.Title>캠퍼스 바로가기</Layout.Title>
+        <div style={{ height: '15px' }}/>
+      </RLayout>
+      <Layout.HorizontalScroll
+        itemList={ campusList }
+        itemWidth={ 170 }
+        gap={ 10 }
+        height={ 70 }
+      />
+    </div>
   )
 }
 

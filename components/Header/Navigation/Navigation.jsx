@@ -107,6 +107,7 @@ const Navigation = (props) => {
       top: '0px', left: '0px',
       width: '100%', height: '100%',
       pointerEvents: props.popup ? "auto" : "none",
+      zIndex: 110
     }}>
       <Background
         popup={ props.popup }

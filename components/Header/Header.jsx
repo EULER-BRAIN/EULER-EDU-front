@@ -13,7 +13,8 @@ const Header = () => {
     top: '0px', left: '0px',
     width: '100%', height: '50px',
     background: 'rgb(255,255,255)',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    zIndex: 100
   }
   const styleLogo = {
     position: 'absolute',

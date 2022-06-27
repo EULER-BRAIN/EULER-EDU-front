@@ -50,6 +50,12 @@ button:focus{
   -khtml-user-select: none;
   user-select:none;
 }
+.NSB {
+  -ms-overflow-style: none;
+}
+.NSB::-webkit-scrollbar {
+  display:none;
+}
 
 .FBold {
   font-family: "NanumBarunGothicBold", sans-serif;
