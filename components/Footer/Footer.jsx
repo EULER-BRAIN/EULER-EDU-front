@@ -1,19 +1,23 @@
 import RLayout from "@components/Layout/RLayout"
+import FooterEmpty from "./FooterEmpty"
 
-const Footer = () => {
+const Footer = (props) => {
   const style = {
     marginTop: '30px',
     borderTop: '1px solid rgb(206, 206, 206)',
   }
 
   return (
-    <div style={ style }>
-      <div style={{ height: '20px' }} />
-      <RLayout>
-        Footer
-      </RLayout>
-      <div style={{ height: '20px' }} />
-    </div>
+    <>
+      { props.padding ? <FooterEmpty /> : null }
+      <div style={ style }>
+        <div style={{ height: '20px' }} />
+        <RLayout>
+          Footer
+        </RLayout>
+        <div style={{ height: '20px' }} />
+      </div>
+    </>
   )
 }
 

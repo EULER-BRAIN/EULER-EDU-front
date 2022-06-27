@@ -202,6 +202,7 @@ const Layout = (props) => {
         bodyWidth >= 910 ? (
           <div>
             <HeaderEmpty />
+            <div style={{ height: '20px' }} />
             <div style={{
               width: '100%',
               display: 'flex'
