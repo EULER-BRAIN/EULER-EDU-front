@@ -6,6 +6,10 @@ html, body {
   width: 100%; height: 100%;
   font-family: "NanumBarunGothicLight", sans-serif;
   font-size: 15px;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
 }
 
 a {
@@ -54,7 +58,7 @@ button:focus{
   -ms-overflow-style: none;
 }
 .NSB::-webkit-scrollbar {
-  display:none;
+  display: none;
 }
 
 .FBold {
