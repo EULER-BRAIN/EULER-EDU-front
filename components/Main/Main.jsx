@@ -53,7 +53,7 @@ const Books = () => {
   /* for test */
   const items = [{ name: '코딩마법서 1권 STONE' }, { name: '코딩마법서 C/C++ STONE' }];
   const contRef = useRef();
-  const ContWidth = useCompWidth(contRef);
+  const contWidth = useCompWidth(contRef);
 
   return (
     <RLayout>
@@ -65,7 +65,7 @@ const Books = () => {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
       }} ref={ contRef }>
-        { items.map(item => <BookItem { ...item } width={ ContWidth / 2 - 5 } />) }
+        { items.map(item => <BookItem { ...item } width={ contWidth / 2 - 5 } />) }
       </div>
     </RLayout>
   )
@@ -96,7 +96,7 @@ const YotubeItem = (props) => {
 const EulerTV = () => {
   const [items, setItems] = useState([]);
   const contRef = useRef();
-  const ContWidth = useCompWidth(contRef);
+  const contWidth = useCompWidth(contRef);
 
   useEffect(() => {
     axiosOJ.get('/json/main/youtubelist').then(({ data }) => {
@@ -130,7 +130,7 @@ const EulerTV = () => {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
       }}>
-        { items.map(item => <YotubeItem { ...item } width={ ContWidth / 2 - 5 } />) }
+        { items.map(item => <YotubeItem { ...item } width={ contWidth / 2 - 5 } />) }
       </div>
     </RLayout>
   )

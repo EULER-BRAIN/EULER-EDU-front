@@ -19,7 +19,7 @@ const useCompWidth = (contRef) => {
     resizeEvent();
     window.addEventListener("resize", resizeEvent);
     return () => window.removeEventListener("resize", resizeEvent);
-  }, []);
+  }, [contRef.current]);
 
   return state;
 }
