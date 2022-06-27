@@ -53,13 +53,21 @@ button:focus{
 
 .FBold {
   font-family: "NanumBarunGothicBold", sans-serif;
+  font-size: 15px;
+  color: rgb(30,30,30);
 }
 .FRegular {
   font-family: "NanumBarunGothic", sans-serif;
+  font-size: 15px;
+  color: rgb(30,30,30);
 }
 .FLight {
   font-family: "NanumBarunGothicLight", sans-serif;
+  font-size: 15px;
+  color: rgb(30,30,30);
 }
 .FExtraLight {
   font-family: "NanumBarunGothicExtraLight", sans-serif;
+  font-size: 15px;
+  color: rgb(30,30,30);
 }
