@@ -14,6 +14,7 @@ const Header = () => {
     width: '100%', height: '50px',
     background: 'rgb(255,255,255)',
     overflow: 'hidden',
+    borderBottom: '1px solid rgb(206, 206, 206)',
     zIndex: 100
   }
   const styleLogo = {

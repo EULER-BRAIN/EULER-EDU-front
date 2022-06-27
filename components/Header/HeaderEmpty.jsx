@@ -1,6 +1,6 @@
 const HeaderEmpty = () => {
   const style = {
-    height: '50px'
+    height: '51px'
   }
   return (
     <div style={ style } />
