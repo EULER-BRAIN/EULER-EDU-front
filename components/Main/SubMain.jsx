@@ -104,6 +104,7 @@ const Maps = (props) => {
     <RLayout>
       <div style={{ height: '15px' }}/>
       <Layout.Title>찾아오시는 길</Layout.Title>
+      <div style={{ height: '15px' }}/>
       <Map
         center={ coordinate }
         style={{
