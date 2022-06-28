@@ -1,15 +1,41 @@
 import useBodyWidth from '@components/Layout/useBodyWidth'
+import Link from 'next/link'
 
 const Title = (props) => {
   const style = {
     fontFamily: 'NanumBarunGothicBold',
-    fontSize: '21px'
+    fontSize: '21px',
+    lineHeight: '25px'
   }
 
   return (
     <div style={ style }>
       { props.children }
     </div>
+  )
+}
+
+const BtnMore = (props) => {
+  const style = {
+    position: 'absolute',
+    top: '15px', right: '0px',
+    color: 'rgb(100,100,100)',
+    fontSize: '14px',
+    lineHeight: '25px'
+  }
+  return props.href ? (
+    <a
+      href={ props.href }
+      target="_blank" rel="noreferrer"
+    >
+      <div style={ style } className="FExtraLight">바로가기</div>
+    </a>
+  ) : (
+    <Link href={ props.link }>
+      <a>
+        <div style={ style } className="FExtraLight">바로가기</div>
+      </a>
+    </Link>
   )
 }
 
@@ -59,4 +85,15 @@ const HorizontalScroll = (props) => {
   )
 }
 
-export default { Title, HorizontalScroll }
+const SandwichLine = () => {
+  return (
+    <div
+      style={{
+        paddingTop: '25px',
+        borderBottom: '1px solid rgb(206,206,206)'
+      }}
+    />
+  )
+}
+
+export default { Title, BtnMore, HorizontalScroll, SandwichLine }

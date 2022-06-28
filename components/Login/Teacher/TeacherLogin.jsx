@@ -44,8 +44,12 @@ const TeacherLogin = () => {
     border: '1px solid rgb(200,200,200)',
   }
   const styleId = {
-    width: '100%', height: '100%',
-    border: 'none', outline: 'none'
+    width: 'calc(100% - 20px)',
+    height: '100%',
+    border: 'none',
+    outline: 'none',
+    paddingLeft: '10px',
+    paddingRight: '10px'
   }
   return (
     <div>
@@ -64,11 +68,19 @@ const TeacherLogin = () => {
           <div style={{ height: '20px' }} />
           <div style={{ marginLeft: '10px', marginRight: '10px' }}>
             <div style={ styleIDCont }>
-              <input style={ styleId } />
+              <input
+                style={ styleId }
+                type="txt"
+                placeholder="아이디"
+              />
             </div>
             <div style={{ height: '10px' }} />
             <div style={ styleIDCont }>
-              <input style={ styleId } />
+              <input
+                style={ styleId }
+                type="password"
+                placeholder="비밀번호"
+              />
             </div>
             <div style={{ height: '10px' }} />
             <BtnLogin />

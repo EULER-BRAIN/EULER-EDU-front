@@ -17,6 +17,10 @@ export default function({ Component, pageProps }) {
         <link rel="manifest" href="/manifest.json" />
         { /* for test */ }
         <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet" />
+        <script
+          type="text/javascript"
+          src={ `//dapi.kakao.com/v2/maps/sdk.js?appkey=${ process.env.kakaoApiKey }&libraries=services,clusterer` }
+        />
       </Head>
       <Header />
       <Component { ...pageProps } />

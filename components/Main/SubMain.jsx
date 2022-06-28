@@ -105,18 +105,24 @@ const Maps = (props) => {
       <div style={{ height: '15px' }}/>
       <Layout.Title>찾아오시는 길</Layout.Title>
       <div style={{ height: '15px' }}/>
-      <Map
-        center={ coordinate }
-        style={{
-          width: "100%",
-          height: "450px",
-        }}
-        level={3}
-      >
-        <CustomOverlayMap position={ coordinate }>
-          <div>영통점</div>
-        </CustomOverlayMap>
-      </Map>
+      <div style={{
+        borderRadius: '10px',
+        overflow: 'hidden',
+        border: '1px solid rgb(206,206,206)'
+      }}>
+        <Map
+          center={ coordinate }
+          style={{
+            width: "100%",
+            height: "450px",
+          }}
+          level={3}
+        >
+          <CustomOverlayMap position={ coordinate }>
+            <div>영통점</div>
+          </CustomOverlayMap>
+        </Map>
+      </div>
     </RLayout>
   )
 }
@@ -126,12 +132,10 @@ const Main = () => {
     <div>
       <HeaderEmpty />
       <Gallery />
-      공지는 글
-      학원 찾아오는 길?
-      강사 정보(인강 사이트 참고)
-      수원 영통점임을 확인할 수 있는 방법?
       <Notice />
+      <Layout.SandwichLine />
       <Posters />
+      <Layout.SandwichLine />
       <Maps />
       <Footer />
     </div>

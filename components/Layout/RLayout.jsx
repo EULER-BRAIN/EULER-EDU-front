@@ -30,9 +30,11 @@ const RLayout = (props) => {
 
   return (
     <div style = { state == 1 ? {
-      width: '884px', margin: 'auto'
+      width: '884px', margin: 'auto',
+      position: 'relative'
     } : {
-      marginLeft: '13px', marginRight: '13px'
+      marginLeft: '13px', marginRight: '13px',
+      position: 'relative'
     } }>
       { props.children }
     </div>

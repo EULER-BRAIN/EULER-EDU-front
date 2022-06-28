@@ -79,11 +79,55 @@ const Campus = () => {
   )
 }
 
+const AwardItem = (props) => {
+  const style = {
+    width: `${ props.size }px`,
+    height: `${ props.size }px`,
+    background: 'rgb(200,200,200)',
+    overflow: 'hidden'
+  }
+  return (
+    <div style={ style }>
+      <Link href="/awards/gallery/123">
+        <a>
+          <div style={{ width: '100%', height: '100%' }}>
+            123
+          </div>
+        </a>
+      </Link>
+    </div>
+  )
+}
 const Awards = () => {
+  const contRef = useRef();
+  const contWidth = useCompWidth(contRef);
+  let itemWidth = 0;
+
+  if (contWidth <= 230) itemWidth = contWidth;
+  else if (contWidth <= 400) itemWidth = (contWidth - 10) / 2;
+  else if (contWidth <= 600) itemWidth = (contWidth - 20) / 3;
+  else if (contWidth <= 700) itemWidth = (contWidth - 30) / 4;
+  else if (contWidth <= 850) itemWidth = (contWidth - 40) / 5;
+  else itemWidth = (contWidth - 50) / 6;
+
   return (
     <RLayout>
       <div style={{ height: '15px' }}/>
       <Layout.Title>어워드</Layout.Title>
+      <Layout.BtnMore link="/awards" />
+      <div style={{ height: '15px' }}/>
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '10px',
+      }} ref={ contRef }>
+        <AwardItem size={ itemWidth } />
+        <AwardItem size={ itemWidth } />
+        <AwardItem size={ itemWidth } />
+        <AwardItem size={ itemWidth } />
+        <AwardItem size={ itemWidth } />
+        <AwardItem size={ itemWidth } />
+      </div>
     </RLayout>
   )
 }
@@ -119,6 +163,7 @@ const Books = () => {
     <RLayout>
       <div style={{ height: '15px' }}/>
       <Layout.Title>오일러BOOKS</Layout.Title>
+      <Layout.BtnMore href="https://smartstore.naver.com/eulerbooks" />
       <div style={{ height: '15px' }}/>
       <div style={{
         display: 'flex',
@@ -188,6 +233,7 @@ const EulerTV = () => {
     <RLayout>
       <div style={{ height: '15px' }}/>
       <Layout.Title>오일러TV</Layout.Title>
+      <Layout.BtnMore href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ" />
       <div style={{ height: '15px' }}/>
       <div style={{
         display: 'flex',
@@ -218,9 +264,13 @@ const Main = () => {
       <HeaderEmpty />
       <Gallery />
       <Campus />
+      <Layout.SandwichLine />
       <Awards />
+      <Layout.SandwichLine />
       <Books />
+      <Layout.SandwichLine />
       <EulerTV />
+      <Layout.SandwichLine />
       <Blogs />
       <Footer />
     </div>
