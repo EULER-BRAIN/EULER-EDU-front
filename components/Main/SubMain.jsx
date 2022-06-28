@@ -5,6 +5,7 @@ import RLayout from '@components/Layout/RLayout'
 import Layout from './Layout'
 import Gallery from './Gallery'
 import Footer from '@components/Footer/Footer'
+import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
 
 const NoticeItem = (props) => {
   const [isHover, setHover] = useState(false);
@@ -97,11 +98,24 @@ const Posters = () => {
   )
 }
 
-const Maps = () => {
+const Maps = (props) => {
+  const coordinate = { lat: 37.2503893, lng: 127.0762224 };
   return (
     <RLayout>
       <div style={{ height: '15px' }}/>
       <Layout.Title>찾아오시는 길</Layout.Title>
+      <Map
+        center={ coordinate }
+        style={{
+          width: "100%",
+          height: "450px",
+        }}
+        level={3}
+      >
+        <CustomOverlayMap position={ coordinate }>
+          <div>영통점</div>
+        </CustomOverlayMap>
+      </Map>
     </RLayout>
   )
 }
