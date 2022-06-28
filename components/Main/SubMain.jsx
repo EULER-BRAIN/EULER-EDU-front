@@ -97,6 +97,15 @@ const Posters = () => {
   )
 }
 
+const Maps = () => {
+  return (
+    <RLayout>
+      <div style={{ height: '15px' }}/>
+      <Layout.Title>찾아오시는 길</Layout.Title>
+    </RLayout>
+  )
+}
+
 const Main = () => {
   return (
     <div>
@@ -108,6 +117,7 @@ const Main = () => {
       수원 영통점임을 확인할 수 있는 방법?
       <Notice />
       <Posters />
+      <Maps />
       <Footer />
     </div>
   )

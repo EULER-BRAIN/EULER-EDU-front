@@ -201,6 +201,15 @@ const EulerTV = () => {
   )
 }
 
+const Blogs = () => {
+  return (
+    <RLayout>
+      <div style={{ height: '15px' }}/>
+      <Layout.Title>오일러BLOG</Layout.Title>
+    </RLayout>
+  )
+}
+
 const Main = () => {
   const bodyWidth = useBodyWidth();
 
@@ -212,6 +221,7 @@ const Main = () => {
       <Awards />
       <Books />
       <EulerTV />
+      <Blogs />
       <Footer />
     </div>
   )

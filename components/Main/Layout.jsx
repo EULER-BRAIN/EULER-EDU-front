@@ -18,6 +18,7 @@ const HorizontalScroll = (props) => {
   const bodyWidth = props.itemWidth * props.itemList.length
     + props.gap * Math.max(props.itemList.length - 1, 0);
   const leftWidth = (fullWidth >= 910 ? (fullWidth - 884) / 2 : 13);
+  const rightWidth = 13;
   
   if (props.itemList.length == 0) return null;
   return (
@@ -29,7 +30,7 @@ const HorizontalScroll = (props) => {
       position: 'relative'
     }} className="NSB">
       <div style = {{
-          width: `${ bodyWidth + leftWidth }px`,
+          width: `${ bodyWidth + leftWidth + rightWidth }px`,
           height: `${ props.height }px`,
           position: 'relative'
       }}>

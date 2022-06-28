@@ -13,7 +13,8 @@ const Footer = (props) => {
       <div style={ style }>
         <div style={{ height: '20px' }} />
         <RLayout>
-          Footer
+          Footer<br />
+          Footer 아이콘 이미지 주세요!
         </RLayout>
         <div style={{ height: '20px' }} />
       </div>

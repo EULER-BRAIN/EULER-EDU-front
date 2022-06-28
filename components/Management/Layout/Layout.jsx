@@ -136,7 +136,7 @@ const NaivMobileItem = (props) => {
   )
 }
 const NaivMobile = (props) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(true);
   const bodyRef = useRef();
 
   const style = {
