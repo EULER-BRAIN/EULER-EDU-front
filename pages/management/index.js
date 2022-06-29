@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Layout from '@components/Management/Layout/Layout'
-import Main from '@components/Management/Main'
+import Main from '@components/Management/Main/Main'
 
 export default function() {
   return (

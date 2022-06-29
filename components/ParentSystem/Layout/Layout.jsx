@@ -5,22 +5,16 @@ const Layout = (props) => {
     {
       name: '사이트 회원 관리',
       list: [
-        { name: '월별 접속수', link: '/' },
-        { name: '신규회원', link: '/' },
-      ]
-    },
-    {
-      name: '사이트 회원 관리',
-      list: [
-        { name: '월별 접속수', link: '/' },
-        { name: '신규회원', link: '/' },
+        { name: '수업', link: '/' },
+        { name: '시험', link: '/' },
+        { name: '출석 로그', link: '/' },
       ]
     }
   ]
 
   return (
     <BLayout
-      naviName="학원 관리"
+      naviName="학부모 시스템"
       naviList={ naviList }
     >
       { props.children }
