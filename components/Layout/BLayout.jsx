@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useSpring, animated } from 'react-spring'
+import Link from '@components/Layout/Link';
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import RLayout from '@components/Layout/RLayout';
 import Footer from '@components/Footer/Footer'
@@ -18,14 +19,19 @@ const NaviListBtn = (props) => {
   }
 
   return (
-    <animated.div
-      onMouseEnter={ () => setHover(true) }
-      onMouseLeave={ () => setHover(false) }
-      className="BTNC"
-      style={ style }
+    <Link
+      to={ props.link }
+      href={ props.href }
     >
-      <div style={ styleText } className="FLight">- { props.name }</div>
-    </animated.div>
+      <animated.div
+        onMouseEnter={ () => setHover(true) }
+        onMouseLeave={ () => setHover(false) }
+        className="BTNC"
+        style={ style }
+      >
+        <div style={ styleText } className="FLight">- { props.name }</div>
+      </animated.div>
+    </Link>
   )
 }
 const NaviListItem = (props) => {
@@ -107,13 +113,18 @@ const NaivMobileBtn = (props) => {
     config: { duration: 100 }
   })
   return (
-    <animated.div
-      style={ style }
-      onMouseEnter={ () => setHover(true) }
-      onMouseLeave={ () => setHover(false) }
+    <Link
+      to={ props.link }
+      href={ props.href }
     >
-      { props.children }
-    </animated.div>
+      <animated.div
+        style={ style }
+        onMouseEnter={ () => setHover(true) }
+        onMouseLeave={ () => setHover(false) }
+      >
+        { props.name }
+      </animated.div>
+    </Link>
   )
 }
 const NaivMobileItem = (props) => {
@@ -125,13 +136,7 @@ const NaivMobileItem = (props) => {
   return (
     <div>
       <div style={ styleText }>{ props.name }</div>
-      { props.list.map((item, index) => {
-        return (
-          <NaivMobileBtn>
-            { item.name }
-          </NaivMobileBtn>
-        )
-      }) }
+      { props.list.map((item, index) => <NaivMobileBtn { ...item } key={ index } />) }
       <div style={{ height: '10px' }} />
     </div>
   )
@@ -225,7 +230,7 @@ const BLayout = (props) => {
           </div>
         )
       }
-      <Footer/>
+      <Footer padding />
     </div>
   )
 }

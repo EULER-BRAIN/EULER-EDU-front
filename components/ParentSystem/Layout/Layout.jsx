@@ -5,9 +5,9 @@ const Layout = (props) => {
     {
       name: '사이트 회원 관리',
       list: [
-        { name: '수업', link: '/' },
-        { name: '시험', link: '/' },
-        { name: '출석 로그', link: '/' },
+        { name: '수업', link: '/parentSystem/lectures' },
+        { name: '시험', link: '/parentSystem/tests' },
+        { name: '입/퇴실 기록', link: '/parentSystem/eRecord' },
       ]
     }
   ]
