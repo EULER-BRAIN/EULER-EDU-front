@@ -35,11 +35,28 @@ const AwardsSet = () => {
       <HeaderEmpty />
       <RLayout>
         <Layout.Title padding>어워드</Layout.Title>
+        <div>어워드 설명</div>
+        <div style={{ height: '15px' }} />
         <div style={{
           display: 'flex',
           flexWrap: 'wrap',
           gap: '10px',
         }} ref={ contRef }>
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
+          <AwardItem size={ itemWidth } />
           <AwardItem size={ itemWidth } />
           <AwardItem size={ itemWidth } />
           <AwardItem size={ itemWidth } />

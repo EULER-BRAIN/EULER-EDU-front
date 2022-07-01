@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useSpring, animated } from 'react-spring'
-import HeaderEmpty from '@components/Header/HeaderEmpty'
-import Footer from '@components/Footer/Footer'
+import { Skeleton, Input } from '../Layout'
 
 const BtnSelect = (props) => {
   const [isHover, setHover] = useState(false);
@@ -26,46 +25,46 @@ const BtnSelect = (props) => {
     </animated.div>
   )
 }
-const ParentLogin = () => {
-  const styleEuler = {
-    textAlign: 'center',
-    color: '#c2151c',
-    fontSize: '26px'
-  }
-  const styleTitle = {
-    textAlign: 'center',
-    color: 'rgb(60,60,60)',
-    fontSize: '20px',
-    paddingBottom: '12px',
-    borderBottom: '2px solid #c2151c'
-  }
 
+const LoginMod1 = (props) => {
   return (
     <div>
-      <HeaderEmpty />
-      <div style={{
-        marginLeft: '20px',
-        marginRight: '20px'
-      }}>
-        <div style={{
-          maxWidth: '280px',
-          margin: 'auto'
-        }}>
-          <div style={{ height: '40px' }}/>
-          <div style={ styleEuler } className="FBold">EULER</div>
-          <div style={ styleTitle } className="FBold">학부모 로그인</div>
-          <div style={{
-            display: 'flex', position: 'relative',
-            width: '100%', height: '34px',
-            borderBottom: '2px solid #c2151c'
-          }}>
-            <BtnSelect>학부모 연락처로 로그인</BtnSelect>
-            <BtnSelect>학생 정보로 로그인</BtnSelect>
-          </div>
-        </div>
-      </div>
-      <Footer padding />
+      <Input />
+      mod1
     </div>
+  )
+}
+
+const LoginMod2 = (props) => {
+  return (
+    <div>
+      <Input />
+      mod2
+    </div>
+  )
+}
+
+const ParentLogin = () => {
+  return (
+    <Skeleton
+      subTitle="학부모 로그인"
+    >
+      <div style={{
+        display: 'flex', position: 'relative',
+        width: '100%', height: '34px',
+        borderBottom: '2px solid #c2151c'
+      }}>
+        <BtnSelect>학부모 연락처로 로그인</BtnSelect>
+        <BtnSelect>학생 정보로 로그인</BtnSelect>
+      </div>
+      <div style={{
+        paddingTop: '20px',
+        marginLeft: '10px',
+        marginRight: '10px'
+      }}>
+        <LoginMod1 />
+      </div>
+    </Skeleton>
   )
 }
 
