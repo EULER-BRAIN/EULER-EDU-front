@@ -1,5 +1,5 @@
 import useBodyWidth from '@components/Layout/useBodyWidth'
-import Link from 'next/link'
+import Link from '@components/Layout/Link'
 
 const Title = (props) => {
   const style = {
@@ -9,9 +9,19 @@ const Title = (props) => {
   }
 
   return (
-    <div style={ style }>
-      { props.children }
-    </div>
+    <>
+      { props.paddingTop || props.padding ? (
+          <div style={{ height: '15px' }} />
+        ) : null
+      }
+      <div style={ style }>
+        { props.children }
+      </div>
+      { props.paddingBottom || props.padding ? (
+          <div style={{ height: '15px' }} />
+        ) : null
+      }
+    </>
   )
 }
 
@@ -31,10 +41,8 @@ const BtnMore = (props) => {
       <div style={ style } className="FExtraLight">바로가기</div>
     </a>
   ) : (
-    <Link href={ props.link }>
-      <a>
-        <div style={ style } className="FExtraLight">바로가기</div>
-      </a>
+    <Link to={ props.link }>
+      <div style={ style } className="FExtraLight">바로가기</div>
     </Link>
   )
 }

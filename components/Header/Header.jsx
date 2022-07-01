@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link'
+import Link from '@components/Layout/Link';
 import Navigation from './Navigation/Navigation';
 
 import svgLogo from "@public/eulerLogo/logo.svg";
@@ -31,14 +31,12 @@ const Header = () => {
     <>
       <div style={ style }>
         <div style={ styleLogo }>
-          <Link href="/">
-            <a>
-              <Image
-                src={ svgLogo } alt="EULER EDU"
-                quality={ 100 }
-                width={ 30 } height={ 30 }
-              />
-            </a>
+          <Link to="/">
+            <Image
+              src={ svgLogo } alt="EULER EDU"
+              quality={ 100 }
+              width={ 30 } height={ 30 }
+            />
           </Link>
         </div>
         <div

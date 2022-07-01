@@ -33,9 +33,7 @@ const NoticeItem = (props) => {
 const Notice = () => {
   return (
     <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>공지</Layout.Title>
-      <div style={{ height: '15px' }}/>
+      <Layout.Title padding>공지</Layout.Title>
       <NoticeItem />
       <NoticeItem />
     </RLayout>
@@ -84,9 +82,7 @@ const Posters = () => {
   return (
     <div>
       <RLayout>
-        <div style={{ height: '15px' }}/>
-        <Layout.Title>포스터</Layout.Title>
-        <div style={{ height: '15px' }}/>
+        <Layout.Title padding>포스터</Layout.Title>
       </RLayout>
       <Layout.HorizontalScroll
         itemList={ posterList }
@@ -102,9 +98,7 @@ const Maps = (props) => {
   const coordinate = { lat: 37.2503893, lng: 127.0762224 };
   return (
     <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>찾아오시는 길</Layout.Title>
-      <div style={{ height: '15px' }}/>
+      <Layout.Title padding>찾아오시는 길</Layout.Title>
       <div style={{
         borderRadius: '10px',
         overflow: 'hidden',

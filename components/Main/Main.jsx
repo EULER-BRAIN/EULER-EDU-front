@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@components/Layout/Link'
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import RLayout from '@components/Layout/RLayout'
 import Layout from './Layout'
 import Gallery from './Gallery'
 import useBodyWidth from '@components/Layout/useBodyWidth'
 import useCompWidth from '@components/Layout/useCompWidth'
+import getAwardWidth from '@components/Awards/AwardsSet/getAwardWidth'
 import Footer from '@components/Footer/Footer'
 import axiosOJ from '@tools/axiosOJ'
 import error from '@tools/error'
@@ -32,29 +33,25 @@ const CampusItem = (props) => {
   }
   return (
     <div style={ style }>
-      <Link href={ `/main/${ props.id }` }>
-        <a>
-          <div style={ styleImgCont }>
-          </div>
-        </a>
+      <Link to={ `/main/${ props.id }` }>
+        <div style={ styleImgCont }>
+        </div>
       </Link>
       <div style={ styleBody }>
-        <Link href={ `/main/${ props.id }` }>
-          <a>
-            <div style={{
-              fontSize: '15px',
-              color: 'rgb(50,50,50)',
-              lineHeight: '18px', height: '18px',
-              paddingTop: '7px'
-            }} className="FBold">수원 영통점</div>
-            <div style={{
-              fontSize: '13px',
-              color: 'rgb(50,50,50)',
-              wordBreak: 'keep-all',
-              lineHeight: '16px', height: '32px',
-              marginTop: '3px'
-            }} className="FLight">경기 수원시 영통구 영통동</div>
-          </a>
+        <Link to={ `/main/${ props.id }` }>
+          <div style={{
+            fontSize: '15px',
+            color: 'rgb(50,50,50)',
+            lineHeight: '18px', height: '18px',
+            paddingTop: '7px'
+          }} className="FBold">수원 영통점</div>
+          <div style={{
+            fontSize: '13px',
+            color: 'rgb(50,50,50)',
+            wordBreak: 'keep-all',
+            lineHeight: '16px', height: '32px',
+            marginTop: '3px'
+          }} className="FLight">경기 수원시 영통구 영통동</div>
         </Link>
       </div>
     </div>
@@ -65,9 +62,7 @@ const Campus = () => {
   return (
     <div>
       <RLayout>
-        <div style={{ height: '15px' }}/>
-        <Layout.Title>캠퍼스 바로가기</Layout.Title>
-        <div style={{ height: '15px' }}/>
+        <Layout.Title padding>캠퍼스 바로가기</Layout.Title>
       </RLayout>
       <Layout.HorizontalScroll
         itemList={ campusList }
@@ -88,12 +83,10 @@ const AwardItem = (props) => {
   }
   return (
     <div style={ style }>
-      <Link href="/awards/gallery/123">
-        <a>
-          <div style={{ width: '100%', height: '100%' }}>
-            123
-          </div>
-        </a>
+      <Link to="/awards/gallery/123">
+        <div style={{ width: '100%', height: '100%' }}>
+          123
+        </div>
       </Link>
     </div>
   )
@@ -101,21 +94,12 @@ const AwardItem = (props) => {
 const Awards = () => {
   const contRef = useRef();
   const contWidth = useCompWidth(contRef);
-  let itemWidth = 0;
-
-  if (contWidth <= 230) itemWidth = contWidth;
-  else if (contWidth <= 400) itemWidth = (contWidth - 10) / 2;
-  else if (contWidth <= 600) itemWidth = (contWidth - 20) / 3;
-  else if (contWidth <= 700) itemWidth = (contWidth - 30) / 4;
-  else if (contWidth <= 850) itemWidth = (contWidth - 40) / 5;
-  else itemWidth = (contWidth - 50) / 6;
+  const itemWidth = getAwardWidth(contWidth);
 
   return (
     <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>어워드</Layout.Title>
+      <Layout.Title padding>어워드</Layout.Title>
       <Layout.BtnMore link="/awards" />
-      <div style={{ height: '15px' }}/>
       <div style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -161,10 +145,8 @@ const Books = () => {
 
   return (
     <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>오일러BOOKS</Layout.Title>
+      <Layout.Title padding>오일러BOOKS</Layout.Title>
       <Layout.BtnMore href="https://smartstore.naver.com/eulerbooks" />
-      <div style={{ height: '15px' }}/>
       <div style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -231,10 +213,8 @@ const EulerTV = () => {
 
   return (
     <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>오일러TV</Layout.Title>
+      <Layout.Title padding>오일러TV</Layout.Title>
       <Layout.BtnMore href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ" />
-      <div style={{ height: '15px' }}/>
       <div style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -250,8 +230,7 @@ const EulerTV = () => {
 const Blogs = () => {
   return (
     <RLayout>
-      <div style={{ height: '15px' }}/>
-      <Layout.Title>오일러BLOG</Layout.Title>
+      <Layout.Title padding>오일러BLOG</Layout.Title>
     </RLayout>
   )
 }
@@ -278,4 +257,3 @@ const Main = () => {
 }
 
 export default Main
-{/* 학원별 공지, 포스터 */}

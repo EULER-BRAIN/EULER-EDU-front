@@ -1,5 +1,5 @@
 import { useSpring, animated } from 'react-spring'
-import Link from 'next/link'
+import Link from '@components/Layout/Link'
 
 const Background = (props) => {
   const style = useSpring({
@@ -41,8 +41,8 @@ const BarItem = (props) => {
   )
   if (props.link) {
     return (
-      <Link href={ props.link }>
-        <a>{ body }</a>
+      <Link to={ props.link }>
+        { body }
       </Link>
     )
   }
