@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { animated, useSpring } from 'react-spring';
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import Footer from '@components/Footer/Footer'
 
@@ -71,4 +73,39 @@ Input.defaultProps = {
   placeholder: ''
 }
 
-export { Skeleton, Input }
+const BtnLogin = (props) => {
+  const [isHover, setHover] = useState(false);
+  const style = useSpring({
+    height: '40px',
+    lineHeight: '40px',
+    borderRadius: '6px',
+    background: isHover || props.unable ? 'rgb(170,15,20)' : 'rgb(194,21,28)',
+    color: 'white',
+    textAlign: 'center',
+    config: { duration: 100 }
+  })
+
+  const onClick = () => {
+    if (!props.unable) {
+      props.onClick();
+    }
+  }
+
+  return (
+    <animated.div
+      style={ style }
+      onMouseEnter={ () => setHover(true) }
+      onMouseLeave={ () => setHover(false) }
+      className="BTNC"
+      onClick={ onClick }
+    >
+      { props.children }
+    </animated.div>
+  )
+}
+BtnLogin.defaultProps = {
+  children: '로그인',
+  onClick: () => {}
+}
+
+export { Skeleton, Input, BtnLogin }

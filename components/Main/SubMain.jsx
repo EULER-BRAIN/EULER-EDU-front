@@ -99,6 +99,11 @@ const Maps = (props) => {
   return (
     <RLayout>
       <Layout.Title padding>찾아오시는 길</Layout.Title>
+      <div>
+        <div>경기도 수원시 영통구 ~~</div>
+        <div>031-123-1234</div>
+      </div>
+      <div style={{ height: '15px' }} />
       <div style={{
         borderRadius: '10px',
         overflow: 'hidden',
