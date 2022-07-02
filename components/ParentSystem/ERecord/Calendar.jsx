@@ -35,7 +35,7 @@ const Day = (props) => {
       onMouseLeave={ () => setHover(false) }
     >
       <div style={{ height: '6px' }} />
-      <div style={ styleDay }>12</div>
+      <div style={ styleDay }>{ props.day ? props.day : '' }</div>
       <div style={{ height: '25px' }}>
       </div>
     </animated.div>
@@ -77,6 +77,15 @@ const Calendar = (props) => {
     <HeaderItem text="토" />
   ];
 
+  const weekDayList = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+  let dayQueueTop = 1;
+  const weekList = [];
+  while (dayQueueTop < props.endDay) {
+    const list = weekDayList.map((week, index) => {
+      return <D
+    });
+    weekList.push(list);
+  }
 
   return (
     <div ref={ contRef }>
