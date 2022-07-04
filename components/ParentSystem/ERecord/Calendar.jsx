@@ -18,7 +18,8 @@ const HeaderItem = (props) => {
 const Day = (props) => {
   const [isHover, setHover] = useState(false);
   const style = useSpring({
-    background: `rgba(120,120,120,${ isHover ? 0.1 : 0 })`,
+    background: `rgba(120,120,120,${ isHover && props.day ? 0.1 : 0 })`,
+    cursor: props.day ? 'pointer' : 'auto',
     config: { duration: 100 }
   })
   const styleDay = {
@@ -78,29 +79,57 @@ const Calendar = (props) => {
   ];
 
   const weekDayList = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-  let dayQueueTop = 1;
+  let dayQueueTop = props.startDay;
   const weekList = [];
   while (dayQueueTop < props.endDay) {
     const list = weekDayList.map((week, index) => {
-      return <D
+      if ((dayQueueTop === props.startDay && weekDayList[index] !== props.startDayWeek)
+        || dayQueueTop > props.endDay) {
+        return <Day />;
+      }
+      const day = dayQueueTop;
+      dayQueueTop += 1;
+      return <Day day={ day } />
     });
     weekList.push(list);
   }
 
+  const styleYear = {
+    fontSize: '13px',
+    color: 'rgb(90,90,90)'
+  }
+  const styleMonth = {
+    fontSize: '20px',
+    color: 'rgb(30,30,30)'
+  }
+  const styleMonthSt = {
+    paddingLeft: '2px',
+    fontsize: '13px',
+    color: 'rgb(90,90,90)'
+  }
+
   return (
-    <div ref={ contRef }>
-      <div>{ props.year }년</div>
-      <div>{ props.month }</div>
+    <div
+      style={{ position: 'relative' }}
+      ref={ contRef }
+    > 
+      <div>
+        <div style={ styleYear } className="">{ props.year }년</div>
+        <div>
+          <span style={ styleMonth } className="FBold">{ props.month }</span>
+          <span style={ styleMonthSt }>월</span>
+        </div>
+      </div>
+      <div style={{ height: '10px' }} />
       <div>
         <WeekLine list={ headerItems } />
-        <WeekLine
-          borderTop="1px solid rgb(206,206,206)"
-          list={ [<Day />,<Day />,<Day />,<Day />,<Day />,<Day />,<Day />] }
-        />
-        <WeekLine
-          borderTop="1px solid rgb(206,206,206)"
-          list={ [<Day />,<Day />,<Day />,<Day />,<Day />,<Day />,<Day />] }
-        />
+        { weekList.map((list, index) => (
+          <WeekLine
+            key={ index }
+            borderTop="1px solid rgb(206,206,206)"
+            list={ list }
+          />
+        )) }
       </div>
     </div>
   )
@@ -108,10 +137,10 @@ const Calendar = (props) => {
 
 Calendar.defaultProps = {
   year: '2022',
-  month: '7',
+  month: '6',
   startDay: 1,
-  endDay: 31,
-  startDatWeek: 'fri'
+  endDay: 30,
+  startDayWeek: 'wed'
 }
 
 export default Calendar

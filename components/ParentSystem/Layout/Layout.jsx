@@ -7,7 +7,7 @@ const Layout = (props) => {
       list: [
         { name: '수업', link: '/parentSystem/lectures' },
         { name: '시험', link: '/parentSystem/tests' },
-        { name: '입/퇴실 기록', link: '/parentSystem/eRecord' },
+        { name: '등/하원 기록', link: '/parentSystem/eRecord' },
       ]
     }
   ]
