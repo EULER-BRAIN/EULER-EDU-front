@@ -4,6 +4,7 @@ import Link from '@components/Layout/Link';
 import Navigation from './Navigation/Navigation';
 
 import svgLogo from "@public/eulerLogo/logo.svg";
+import IconMenu from '@material-ui/icons/Menu';
 
 const Header = () => {
   const [isNaviPopup, setNaviPopup] = useState(false);
@@ -19,7 +20,7 @@ const Header = () => {
   }
   const styleLogo = {
     position: 'absolute',
-    top: '0px', left: '10px',
+    top: '10px', left: '10px',
     height: '30px'
   }
   const styleNavi = {
@@ -42,7 +43,9 @@ const Header = () => {
         <div
           style={ styleNavi }
           onClick={ () => setNaviPopup(true) }
-        >navi</div>
+        >
+          <IconMenu variant="contained" color="black" />
+        </div>
       </div>
       <Navigation
         popup={ isNaviPopup }

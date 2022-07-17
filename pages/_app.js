@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Header from '@components/Header/Header'
 
 import '@styles/globals.css'
+import '@styles/fonts.css'
 
 export default function({ Component, pageProps }) {
   return (
@@ -15,8 +16,6 @@ export default function({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/eulerLogo/logo192.png" />
         <link rel="manifest" href="/manifest.json" />
-        { /* for test */ }
-        <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet" />
         <script
           type="text/javascript"
           src={ `//dapi.kakao.com/v2/maps/sdk.js?appkey=${ process.env.kakaoApiKey }&libraries=services,clusterer` }

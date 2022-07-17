@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "NanumBarunGothicExtraLight";
+  src: local("NanumBarunGothicExtraLight"),
+    url("../fonts/NanumBarunGothicUltraLight.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumBarunGothicLight";
+  src: local("NanumBarunGothicLight"),
+    url("../fonts/NanumBarunGothicLight.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: local("NanumBarunGothic"),
+    url("../fonts/NanumBarunGothic.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumBarunGothicBold";
+  src: local("NanumBarunGothicBold"),
+    url("../fonts/NanumBarunGothicBold.ttf") format("truetype");
+}
