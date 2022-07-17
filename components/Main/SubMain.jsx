@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react'
+import Image from 'next/image'
+import { useState, useRef, useEffect } from 'react'
 import { useSpring, animated } from 'react-spring'
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import RLayout from '@components/Layout/RLayout'
@@ -7,6 +8,7 @@ import Layout from './Layout'
 import Gallery from './Gallery'
 import Footer from '@components/Footer/Footer'
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
+import getS3ImgUrl from '@tools/getS3ImgUrl'
 
 import { FcPhone, FcGraduationCap } from 'react-icons/fc'
 
@@ -97,6 +99,49 @@ const Posters = () => {
   )
 }
 
+const MapChild = (props) => {
+  const [isHover, setHover] = useState(false);
+  const opacity = useSpring({
+    opacity: isHover ? 1 : 0.7,
+    config: { duration: 100 }
+  }).opacity;
+
+  return (
+    <animated.div style={{
+      width: '0px', height: '0px',
+      position: 'relative',
+      opacity: opacity
+    }}>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '30px', left: 'calc(50% - 36px)',
+          width: '70px', height: '70px',
+          border: '1px solid rgb(120,120,120)',
+          borderRadius: '36px',
+          background: 'white',
+          overflow: 'hidden'
+        }}
+        onMouseEnter={ () => setHover(true) }
+        onMouseLeave={ () => setHover(false) }
+      >
+        <Image
+          src={ getS3ImgUrl(`campus/${ props.id }.png`) }
+          width={ 70 } height={ 70 }
+        />
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '0px', left: '-1px',
+          width: '0px', height: '30px',
+          borderRight: '2px solid rgb(120,120,120)'
+        }}
+      />
+    </animated.div>
+    
+  )
+}
 const BtnNaverMap = (props) => {
   const style = {
     paddingTop: '8px',
@@ -170,7 +215,7 @@ const Maps = (props) => {
         level={3}
       >
         <CustomOverlayMap position={ coordinate }>
-          <div>영통점</div>
+          <MapChild id={ props.id } />
         </CustomOverlayMap>
       </Map>
     </div>
@@ -215,7 +260,11 @@ const Maps = (props) => {
   )
 }
 
-const Main = () => {
+const Main = ({ id }) => {
+  useEffect(() => {
+    
+  }, [id]);
+
   return (
     <div>
       <HeaderEmpty />
@@ -224,7 +273,9 @@ const Main = () => {
       <Layout.SandwichLine />
       <Posters />
       <Layout.SandwichLine />
-      <Maps />
+      <Maps
+        id={ id }
+      />
       <Footer />
     </div>
   )
