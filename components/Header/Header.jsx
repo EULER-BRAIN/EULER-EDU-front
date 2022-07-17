@@ -25,7 +25,12 @@ const Header = () => {
   }
   const styleNavi = {
     position: 'absolute',
-    top: '0px', right: '0px'
+    top: '12px', right: '12px',
+    width: '26px', height: '26px'
+  }
+  const styleNaviIcon = {
+    width: '100%', height: '100%',
+    fill: 'rgb(70,70,70)'
   }
 
   return (
@@ -43,8 +48,9 @@ const Header = () => {
         <div
           style={ styleNavi }
           onClick={ () => setNaviPopup(true) }
+          className="BTNC"
         >
-          <IconMenu variant="contained" color="black" />
+          <IconMenu style={ styleNaviIcon } />
         </div>
       </div>
       <Navigation

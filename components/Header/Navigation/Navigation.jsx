@@ -1,6 +1,8 @@
 import { useSpring, animated } from 'react-spring'
 import Link from '@components/Layout/Link'
 
+import IconClose from '@material-ui/icons/Close';
+
 const Background = (props) => {
   const style = useSpring({
     position: 'absolute',
@@ -67,10 +69,31 @@ const Bar = (props) => {
     background: `white`,
     overflow: 'auto'
   })
+  const styleLay1 = {
+    position: 'relative',
+    height: '50px'
+  }
+  const styleClose = {
+    position: 'absolute',
+    top: '12px', right: '12px',
+    width: '26px', height: '26px'
+  }
+  const styleCloseIcon = {
+    width: '100%', height: '100%',
+    fill: 'rgb(70,70,70)'
+  }
 
   return (
     <animated.div style={ style }>
-      <div onClick={ props.onClose }>close</div>
+      <div style={ styleLay1 }>
+        <div
+          style={ styleClose }
+          onClick={ props.onClose }
+          className="BTNC"
+        >
+          <IconClose style={ styleCloseIcon } />
+        </div>
+      </div>
       <BarItem
         link="/login/parent"
         onClick={ props.onClose }
