@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
 import BLayout from "@components/Layout/BLayout";
 
 const Layout = (props) => {
+  const state = useSelector((state) => state);
+  console.log(state);
+  
   const naviList = [
     {
       name: '사이트 회원 관리',

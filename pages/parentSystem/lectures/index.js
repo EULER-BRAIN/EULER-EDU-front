@@ -3,6 +3,7 @@ import Layout from '@components/ParentSystem/Layout/Layout'
 import Lectures from '@components/ParentSystem/Lectures/Lectures'
 
 export default function() {
+  return <Layout page="main"/>
   return (
     <div>
       <Head>

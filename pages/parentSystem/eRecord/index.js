@@ -3,6 +3,7 @@ import Layout from '@components/ParentSystem/Layout/Layout'
 import ERecord from '@components/ParentSystem/ERecord/ERecord'
 
 export default function() {
+  return <Layout page="main"/>
   return (
     <div>
       <Head>

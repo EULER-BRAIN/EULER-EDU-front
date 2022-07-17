@@ -1,12 +1,16 @@
+import withRedux from 'next-redux-wrapper';
+import { Provider } from 'react-redux'
+
 import Head from 'next/head'
 import Header from '@components/Header/Header'
+import reduxStore from '@tools/reduxStore'
 
 import '@styles/globals.css'
 import '@styles/fonts.css'
 
-export default function({ Component, pageProps }) {
+const App = ({ Component, store }) => {
   return (
-    <div>
+    <Provider store={ store }>
       <Head>
         <title>오일러EDU</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,7 +26,9 @@ export default function({ Component, pageProps }) {
         />
       </Head>
       <Header />
-      <Component { ...pageProps } />
-    </div>
+      <Component />
+    </Provider>
   )
 }
+
+export default withRedux(reduxStore)(App)
