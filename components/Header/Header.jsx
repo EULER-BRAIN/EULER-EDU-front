@@ -4,7 +4,7 @@ import Link from '@components/Layout/Link';
 import Navigation from './Navigation/Navigation';
 
 import svgLogo from "@public/eulerLogo/logo.svg";
-import IconMenu from '@material-ui/icons/Menu';
+import { MdMenu } from 'react-icons/md';
 
 const Header = () => {
   const [isNaviPopup, setNaviPopup] = useState(false);
@@ -50,7 +50,7 @@ const Header = () => {
           onClick={ () => setNaviPopup(true) }
           className="BTNC"
         >
-          <IconMenu style={ styleNaviIcon } />
+          <MdMenu style={ styleNaviIcon } />
         </div>
       </div>
       <Navigation

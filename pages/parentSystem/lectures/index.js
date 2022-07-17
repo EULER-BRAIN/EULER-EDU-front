@@ -8,7 +8,7 @@ export default function() {
       <Head>
         <title>오일러EDU : 관리</title>
       </Head>
-      <Layout page="main">
+      <Layout page="lectures">
         <Lectures />
       </Layout>
     </div>

@@ -1,10 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useSpring, animated } from 'react-spring'
 import Link from '@components/Layout/Link';
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import RLayout from '@components/Layout/RLayout';
 import Footer from '@components/Footer/Footer'
 import useBodyWidth from '@components/Layout/useBodyWidth'
+
+import { VscChevronDown } from 'react-icons/vsc'
 
 const NaviListBtn = (props) => {
   const [isHover, setHover] = useState(false);
@@ -35,10 +37,17 @@ const NaviListBtn = (props) => {
   )
 }
 const NaviListItem = (props) => {
-  const [isOpen, setOpen] = useState(false);
+  let selected = useMemo(() => {
+    for(const item of props.list) {
+      if (item.id === props.page) return true
+    }
+    return false
+  }, [props.list, props.page]);
+  const [isOpen, setOpen] = useState(selected);
   const [isHover, setHover] = useState(false);
 
   const style = useSpring({
+    position: 'relative',
     height: isOpen ? `${ 50 + 30 * props.list.length }px` : '40px',
     overflow: 'hidden',
     borderBottom: '1px solid rgb(206, 206, 206)',
@@ -53,6 +62,16 @@ const NaviListItem = (props) => {
     height: '40px', lineHeight: '40px',
     paddingLeft: '10px'
   }
+  const styleBtn = useSpring({
+    position: 'absolute',
+    top: '7px', right: '7px',
+    widht: '26px', height: '26px',
+    transform: `rotate(${ isOpen ? -180 : 0 }deg)`
+  })
+  const styleBtnIcon = {
+    width: '100%', height: '100%',
+    fill: 'rgb(130,130,130)'
+  }
 
   return (
     <animated.div
@@ -66,8 +85,13 @@ const NaviListItem = (props) => {
         className="BTNC"
       >
         <div style={ styleTopText }>{ props.name }</div>
+        <animated.div style={ styleBtn }>
+          <VscChevronDown style={ styleBtnIcon } />
+        </animated.div>
       </animated.div>
-      { props.list.map((item, index) => <NaviListBtn { ...item } key={ index } />) }
+      { props.list.map((item, index) => (
+        <NaviListBtn { ...item } key={ index } />
+      )) }
     </animated.div>
   )
 }
@@ -92,6 +116,7 @@ const NaviLeft = (props) => {
             <NaviListItem
               name={ item.name }
               list={ item.list }
+              page={ props.page }
               key={ index }
             />
           )
@@ -133,6 +158,7 @@ const NaivMobileItem = (props) => {
     paddingBottom: '3px',
     color: 'rgb(100,100,100)'
   }
+
   return (
     <div>
       <div style={ styleText }>{ props.name }</div>
@@ -173,7 +199,14 @@ const NaivMobile = (props) => {
             <div style={ styleBtnOpen } onClick={ () => setOpen(!isOpen) }>open/close</div>
             <div ref={ bodyRef }>
               <div style={{ height: '5px' }}/>
-              { props.list.map((item, index) => <NaivMobileItem { ...item } key={ index } />) }
+              { props.list.map((item, index) => (
+                <NaivMobileItem 
+                  name={ item.name }
+                  list={ item.list }
+                  page={ props.page }
+                  key={ index }
+                />
+              )) }
             </div>
           </div>
         </RLayout>
@@ -199,6 +232,7 @@ const BLayout = (props) => {
               <NaviLeft
                 name={ props.naviName }
                 list={ props.naviList }
+                page={ props.page }
               />
               <div style={{
                 width: 'calc(100% - 270px)'
@@ -222,6 +256,7 @@ const BLayout = (props) => {
             <NaivMobile
               name={ props.naviName }
               list={ props.naviList }
+              page={ props.page }
             />
             <div style={{ height: '15px' }}/>
             <RLayout>

@@ -1,8 +1,7 @@
 import { useSpring, animated } from 'react-spring'
 import Link from '@components/Layout/Link'
 
-import IconClose from '@material-ui/icons/Close';
-import IconExit from '@material-ui/icons/ExitToApp';
+import { MdClose, MdExitToApp } from 'react-icons/md';
 
 const Background = (props) => {
   const style = useSpring({
@@ -33,6 +32,7 @@ const BarItem = (props) => {
   }
   const styleExit = {
     height: '16px',
+    marginLeft: '3px',
     marginTop: '5px',
     verticalAlign: 'top',
     fill: 'rgb(120,120,120)'
@@ -49,7 +49,7 @@ const BarItem = (props) => {
       >
         { props.children }
         { props.newTab ?
-          <IconExit style={ styleExit } /> : null
+          <MdExitToApp style={ styleExit } /> : null
         }
       </div>
     </div>
@@ -104,7 +104,7 @@ const Bar = (props) => {
           onClick={ props.onClose }
           className="BTNC"
         >
-          <IconClose style={ styleCloseIcon } />
+          <MdClose style={ styleCloseIcon } />
         </div>
       </div>
       <BarItem
