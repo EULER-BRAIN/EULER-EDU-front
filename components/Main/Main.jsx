@@ -145,20 +145,31 @@ const BookItem = (props) => {
   const styleImgcontainer = {
     width: `${ props.width }px`,
     height: `${ props.width/4*3 }px`,
+    position: 'relative',
     background: 'rgb(200,200,200)'
-  }
-  const styleImg = {
-
   }
   return (
     <div style={{
-      width: `${ props.width }px`
+      width: `${ props.width }px`,
+      overflow: 'hidden'
     }}>
-      <div style={ styleImgcontainer }>
-        <img style={ styleImg } />
-      </div>
-      <div style={{ height: '6px' }}/>
-      <div className="FLight">{ props.name }</div>
+      <a
+        href={ props.href }
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div style={ styleImgcontainer }>
+          <Image
+            src={ getS3ImgUrl(`books/${ props.id }.png`) }
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+        <div style={{ height: '6px' }}/>
+        <div className="FLight">
+          { props.name }
+        </div>
+      </a>
     </div>
   )
 }
@@ -175,8 +186,17 @@ const Books = (props) => {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
+        rowGap: '14px'
       }} ref={ contRef }>
-        { props.items.map(item => <BookItem { ...item } width={ contWidth / 2 - 7 } />) }
+        { props.items.map((item, index) => (
+          <BookItem
+            key={ index }
+            name={ item.name }
+            href={ item.href }
+            id={ item.id }
+            width={ contWidth / 2 - 7 }
+          />
+        )) }
       </div>
     </>
   )
@@ -262,14 +282,20 @@ const Main = () => {
     name: "수원 영통점",
     add: "경기도 수원시 영통구 영통동"
   }]
-  const awardItems = [{
-    id: 'test01'
+  const awardItems = [{ id: 'test01' }, { id: 'test02' }, { id: 'test03' }]
+  const bookItems = [{
+    name: '코딩마법서 C/C++ STONE',
+    id: 'c_stone',
+    href: 'https://smartstore.naver.com/eulerbooks/products/5080335014'
+  }, { 
+    name: '코딩마법서 C/C++ IRON',
+    id: 'c_iron',
+    href: 'https://smartstore.naver.com/eulerbooks/products/6291557992'
   }, {
-    id: 'test02'
-  }, {
-    id: 'test03'
-  }]
-  const bookItems = [{ name: '코딩마법서 1권 STONE' }, { name: '코딩마법서 C/C++ STONE' }];
+    name: '코딩마법서 파이썬 STONE',
+    id: 'python_stone',
+    href: 'https://smartstore.naver.com/eulerbooks/products/5485780268'
+  }];
   const [youtubeItems, setYoutubeItems] = useState([]);
 
   useEffect(() => {
