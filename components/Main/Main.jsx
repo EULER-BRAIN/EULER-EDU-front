@@ -137,14 +137,13 @@ const BookItem = (props) => {
     </div>
   )
 }
-const Books = () => {
+const Books = (props) => {
   /* for test */
-  const items = [{ name: '코딩마법서 1권 STONE' }, { name: '코딩마법서 C/C++ STONE' }];
   const contRef = useRef();
   const contWidth = useCompWidth(contRef);
 
-  return (
-    <RLayout>
+  const body = (
+    <>
       <Layout.Title padding>오일러BOOKS</Layout.Title>
       <Layout.BtnMore href="https://smartstore.naver.com/eulerbooks" />
       <div style={{
@@ -152,8 +151,17 @@ const Books = () => {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
       }} ref={ contRef }>
-        { items.map(item => <BookItem { ...item } width={ contWidth / 2 - 7 } />) }
+        { props.items.map(item => <BookItem { ...item } width={ contWidth / 2 - 7 } />) }
       </div>
+    </>
+  )
+  return props.splited ? (
+    <div>
+      { body }
+    </div>
+  ) : (
+    <RLayout>
+      { body }
     </RLayout>
   )
 }
@@ -185,10 +193,47 @@ const YotubeItem = (props) => {
     </div>
   )
 }
-const EulerTV = () => {
-  const [items, setItems] = useState([]);
+const EulerTV = (props) => {
   const contRef = useRef();
   const contWidth = useCompWidth(contRef);
+
+  const body = (
+    <>
+      <Layout.Title padding>오일러TV</Layout.Title>
+      <Layout.BtnMore href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ" />
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        rowGap: '14px'
+      }} ref={ contRef }>
+        { props.items.map(item => <YotubeItem { ...item } width={ contWidth / 2 - 7 } />) }
+      </div>
+    </>
+  )
+  return props.splited ? (
+    <div>
+      { body }
+    </div>
+  ) : (
+    <RLayout>
+      { body }
+    </RLayout>
+  )
+}
+
+const Blogs = () => {
+  return (
+    <RLayout>
+      <Layout.Title padding>오일러BLOG</Layout.Title>
+    </RLayout>
+  )
+}
+
+const Main = () => {
+  const bodyWidth = useBodyWidth();
+  const bookItems = [{ name: '코딩마법서 1권 STONE' }, { name: '코딩마법서 C/C++ STONE' }];
+  const [youtubeItems, setYoutubeItems] = useState([]);
 
   useEffect(() => {
     axiosOJ.get('/json/main/youtubelist').then(({ data }) => {
@@ -204,39 +249,12 @@ const EulerTV = () => {
             })
           }
         })
-        setItems(list)
+        setYoutubeItems(list)
       } catch(e) {
         error(e)
       }
     })
   }, []);
-
-  return (
-    <RLayout>
-      <Layout.Title padding>오일러TV</Layout.Title>
-      <Layout.BtnMore href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ" />
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        rowGap: '14px'
-      }} ref={ contRef }>
-        { items.map(item => <YotubeItem { ...item } width={ contWidth / 2 - 7 } />) }
-      </div>
-    </RLayout>
-  )
-}
-
-const Blogs = () => {
-  return (
-    <RLayout>
-      <Layout.Title padding>오일러BLOG</Layout.Title>
-    </RLayout>
-  )
-}
-
-const Main = () => {
-  const bodyWidth = useBodyWidth();
 
   return (
     <div>
@@ -246,9 +264,41 @@ const Main = () => {
       <Layout.SandwichLine />
       <Awards />
       <Layout.SandwichLine />
-      <Books />
-      <Layout.SandwichLine />
-      <EulerTV />
+      {
+        bodyWidth > 650 ? (
+          <RLayout>
+            <div style={{
+              display: 'flex',
+              gap: '20px'
+            }}>
+              <div style={{
+                position: 'relative',
+                width: 'calc(50% - 10px)'
+              }}>
+                <Books
+                  items={ bookItems }
+                  splited
+                />
+              </div>
+              <div style={{
+                position: 'relative',
+                width: 'calc(50% - 10px)'
+              }}>
+                <EulerTV
+                  items={ youtubeItems }
+                  splited
+                />
+              </div>
+            </div>
+          </RLayout>
+        ) : (
+          <div>
+            <Books items={ bookItems } />
+            <Layout.SandwichLine />
+            <EulerTV items={ youtubeItems } />
+          </div>
+        )
+      }
       <Layout.SandwichLine />
       <Blogs />
       <Footer />
