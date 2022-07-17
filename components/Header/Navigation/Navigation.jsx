@@ -2,6 +2,7 @@ import { useSpring, animated } from 'react-spring'
 import Link from '@components/Layout/Link'
 
 import IconClose from '@material-ui/icons/Close';
+import IconExit from '@material-ui/icons/ExitToApp';
 
 const Background = (props) => {
   const style = useSpring({
@@ -30,6 +31,13 @@ const BarItem = (props) => {
     height: '30px', lineHeight: '30px',
     fontSize: '16px'
   }
+  const styleExit = {
+    height: '16px',
+    marginTop: '5px',
+    verticalAlign: 'top',
+    fill: 'rgb(120,120,120)'
+  }
+
   const body = (
     <div
       style={ style }
@@ -38,7 +46,12 @@ const BarItem = (props) => {
       <div
         style={ styleText }
         className="FLight"
-      >{ props.children }</div>
+      >
+        { props.children }
+        { props.newTab ?
+          <IconExit style={ styleExit } /> : null
+        }
+      </div>
     </div>
   )
   if (props.link) {
@@ -109,14 +122,17 @@ const Bar = (props) => {
       <BarItem
         href="https://smartstore.naver.com/eulerbooks"
         onClick={ props.onClose }
+        newTab
       >오일러BOOKS</BarItem>
       <BarItem
         href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ"
         onClick={ props.onClose }
+        newTab
       >오일러TV</BarItem>
       <BarItem
         href="https://euleroj.io/"
         onClick={ props.onClose }
+        newTab
       >오일러OJ</BarItem>
       <div style={{ height: '70px' }} />
     </animated.div>
