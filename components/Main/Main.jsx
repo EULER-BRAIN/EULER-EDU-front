@@ -10,6 +10,7 @@ import useCompWidth from '@components/Layout/useCompWidth'
 import getAwardWidth from '@components/Awards/AwardsSet/getAwardWidth'
 import Footer from '@components/Footer/Footer'
 import axiosOJ from '@tools/axiosOJ'
+import getS3ImgUrl from '@tools/getS3ImgUrl'
 import error from '@tools/error'
 
 const CampusItem = (props) => {
@@ -35,6 +36,11 @@ const CampusItem = (props) => {
     <div style={ style }>
       <Link to={ `/main/${ props.id }` }>
         <div style={ styleImgCont }>
+          <Image
+            src={ getS3ImgUrl(`campus/${ props.id }.png`) }
+            alt={ props.name }
+            width={ 70 } height={ 70 }
+          />
         </div>
       </Link>
       <div style={ styleBody }>
@@ -44,21 +50,29 @@ const CampusItem = (props) => {
             color: 'rgb(50,50,50)',
             lineHeight: '18px', height: '18px',
             paddingTop: '7px'
-          }} className="FBold">수원 영통점</div>
+          }} className="FBold">{ props.name }</div>
           <div style={{
             fontSize: '13px',
             color: 'rgb(50,50,50)',
             wordBreak: 'keep-all',
             lineHeight: '16px', height: '32px',
             marginTop: '3px'
-          }} className="FLight">경기 수원시 영통구 영통동</div>
+          }} className="FLight">{ props.add }</div>
         </Link>
       </div>
     </div>
   )
 }
-const Campus = () => {
-  const campusList = [<CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>, <CampusItem id="yeongtong"/>];
+const Campus = (props) => {
+  const campusList = props.items.map((item, index) => (
+    <CampusItem
+      key={ index }
+      id={ item.id }
+      name={ item.name }
+      add={ item.add }
+    />
+  ))
+
   return (
     <div>
       <RLayout>
@@ -83,15 +97,23 @@ const AwardItem = (props) => {
   }
   return (
     <div style={ style }>
-      <Link to="/awards/gallery/123">
-        <div style={{ width: '100%', height: '100%' }}>
-          123
+      <Link to={ `/awards/gallery/${ props.id }` }>
+        <div style={{
+            width: '100%',
+            height: '100%',
+            position: 'relative'
+          }}>
+          <Image
+            src={ getS3ImgUrl(`awards/${ props.id }.png`) }
+            alt={ `awards/${ props.id }` }
+            layout="fill"
+          />
         </div>
       </Link>
     </div>
   )
 }
-const Awards = () => {
+const Awards = (props) => {
   const contRef = useRef();
   const contWidth = useCompWidth(contRef);
   const itemWidth = getAwardWidth(contWidth);
@@ -105,12 +127,15 @@ const Awards = () => {
         flexWrap: 'wrap',
         gap: '10px',
       }} ref={ contRef }>
-        <AwardItem size={ itemWidth } />
-        <AwardItem size={ itemWidth } />
-        <AwardItem size={ itemWidth } />
-        <AwardItem size={ itemWidth } />
-        <AwardItem size={ itemWidth } />
-        <AwardItem size={ itemWidth } />
+        {
+          props.items.map((item, index) => (
+            <AwardItem
+              key={ index }
+              id={ item.id }
+              size={ itemWidth }
+            />
+          ))
+        }
       </div>
     </RLayout>
   )
@@ -232,6 +257,18 @@ const Blogs = () => {
 
 const Main = () => {
   const bodyWidth = useBodyWidth();
+  const campusItems = [{
+    id: "test",
+    name: "수원 영통점",
+    add: "경기도 수원시 영통구 영통동"
+  }]
+  const awardItems = [{
+    id: 'test01'
+  }, {
+    id: 'test02'
+  }, {
+    id: 'test03'
+  }]
   const bookItems = [{ name: '코딩마법서 1권 STONE' }, { name: '코딩마법서 C/C++ STONE' }];
   const [youtubeItems, setYoutubeItems] = useState([]);
 
@@ -260,20 +297,20 @@ const Main = () => {
     <div>
       <HeaderEmpty />
       <Gallery />
-      <Campus />
+      <Campus items={ campusItems } />
       <Layout.SandwichLine />
-      <Awards />
+      <Awards items={ awardItems } />
       <Layout.SandwichLine />
       {
         bodyWidth > 650 ? (
           <RLayout>
             <div style={{
               display: 'flex',
-              gap: '20px'
+              gap: '30px'
             }}>
               <div style={{
                 position: 'relative',
-                width: 'calc(50% - 10px)'
+                width: 'calc(50% - 15px)'
               }}>
                 <Books
                   items={ bookItems }
@@ -282,7 +319,7 @@ const Main = () => {
               </div>
               <div style={{
                 position: 'relative',
-                width: 'calc(50% - 10px)'
+                width: 'calc(50% - 15px)'
               }}>
                 <EulerTV
                   items={ youtubeItems }

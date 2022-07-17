@@ -1,7 +1,7 @@
 import _axios from 'axios';
 
 const axios = _axios.create({
-  baseURL: 'https://euleroj.io',
+  baseURL: process.env.urlOj,
   withCredentials: true
 });
 
