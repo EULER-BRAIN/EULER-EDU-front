@@ -10,6 +10,7 @@ import useCompWidth from '@components/Layout/useCompWidth'
 import getAwardWidth from '@components/Awards/AwardsSet/getAwardWidth'
 import Footer from '@components/Footer/Footer'
 import axiosOJ from '@tools/axiosOJ'
+import axiosEDU from '@tools/axiosEDU'
 import getS3ImgUrl from '@tools/getS3ImgUrl'
 import error from '@tools/error'
 
@@ -277,28 +278,33 @@ const Blogs = () => {
 
 const Main = () => {
   const bodyWidth = useBodyWidth();
-  const campusItems = [{
-    id: "test",
-    name: "수원 영통점",
-    add: "경기도 수원시 영통구 영통동"
-  }]
-  const awardItems = [{ id: 'test01' }, { id: 'test02' }, { id: 'test03' }]
-  const bookItems = [{
-    name: '코딩마법서 C/C++ STONE',
-    id: 'c_stone',
-    href: 'https://smartstore.naver.com/eulerbooks/products/5080335014'
-  }, { 
-    name: '코딩마법서 C/C++ IRON',
-    id: 'c_iron',
-    href: 'https://smartstore.naver.com/eulerbooks/products/6291557992'
-  }, {
-    name: '코딩마법서 파이썬 STONE',
-    id: 'python_stone',
-    href: 'https://smartstore.naver.com/eulerbooks/products/5485780268'
-  }];
+  const [campusItems, setCampusItems] = useState([]);
+  const [awardItems, setAwardItems] = useState([]);
+  const [bookItems, setBookItems] = useState([]);
   const [youtubeItems, setYoutubeItems] = useState([]);
 
   useEffect(() => {
+    axiosEDU.get('/main').then(({ data }) => {
+      setCampusItems(data.campuses.map(item => {
+        return {
+          id: item.id,
+          name: item.name,
+          add: item.subname
+        }
+      }));
+      setAwardItems(data.awards.map(item => {
+        return {
+          id: item._id
+        }
+      }));
+      setBookItems(data.books.map(item => {
+        return {
+          name: item.name,
+          id: item._id,
+          href: item.url
+        }
+      }))
+    });
     axiosOJ.get('/json/main/youtubelist').then(({ data }) => {
       const list = [];
       try {

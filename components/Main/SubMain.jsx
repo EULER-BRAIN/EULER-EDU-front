@@ -9,6 +9,7 @@ import Gallery from './Gallery'
 import Footer from '@components/Footer/Footer'
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
 import getS3ImgUrl from '@tools/getS3ImgUrl'
+import axiosEDU from '@tools/axiosEDU'
 
 import { FcPhone, FcGraduationCap } from 'react-icons/fc'
 
@@ -187,17 +188,20 @@ const MapDiv = (props) => {
 const Maps = (props) => {
   const contRef = useRef();
   const bodyWidth = useCompWidth(contRef);
-  const coordinate = { lat: 37.2503893, lng: 127.0762224 };
+  const coordinate = {
+    lat: props.lat,
+    lng: props.lng
+  };
 
   const layRight = (
     <div>
-      <MapDiv Icon={ FcGraduationCap }>경기도 수원시 영통구 영통동 1005-3</MapDiv>
-      <MapDiv Icon={ FcPhone }>031-123-1234</MapDiv>
+      <MapDiv Icon={ FcGraduationCap }>{ props.address }</MapDiv>
+      <MapDiv Icon={ FcPhone }>{ props.call }</MapDiv>
     </div>
   )
   const layRight2 = (
     <div>
-      <BtnNaverMap href="https://naver.me/5oQXNtot" />
+      <BtnNaverMap href={ props.naverMapUrl } />
     </div>
   )
   const layLeft = (
@@ -206,18 +210,22 @@ const Maps = (props) => {
       overflow: 'hidden',
       border: '1px solid rgb(206,206,206)'
     }}>
-      <Map
-        center={ coordinate }
-        style={{
-          width: "100%",
-          height: "450px",
-        }}
-        level={3}
-      >
-        <CustomOverlayMap position={ coordinate }>
-          <MapChild id={ props.id } />
-        </CustomOverlayMap>
-      </Map>
+      {
+        props.lat && props.lng ? (
+          <Map
+            center={ coordinate }
+            style={{
+              width: "100%",
+              height: "450px",
+            }}
+            level={3}
+          >
+            <CustomOverlayMap position={ coordinate }>
+              <MapChild id={ props.id } />
+            </CustomOverlayMap>
+          </Map>
+        ) : null
+      }
     </div>
   )
 
@@ -261,8 +269,18 @@ const Maps = (props) => {
 }
 
 const Main = ({ id }) => {
+  const [mapInfo, setMapInfo] = useState({});
   useEffect(() => {
-    
+    axiosEDU.get(`/main/${ id }`).then(({ data }) => {
+      console.log(data);
+      setMapInfo({
+        address: data.campus.address,
+        call: data.campus.call,
+        lat: data.campus.lat,
+        lng: data.campus.lng,
+        naverMapUrl: undefined
+      })
+    })
   }, [id]);
 
   return (
@@ -275,6 +293,11 @@ const Main = ({ id }) => {
       <Layout.SandwichLine />
       <Maps
         id={ id }
+        address={ mapInfo.address }
+        call={ mapInfo.call }
+        lat={ mapInfo.lat }
+        lng={ mapInfo.lng }
+        naverMapUrl={ mapInfo.naverMapUrl }
       />
       <Footer />
     </div>
