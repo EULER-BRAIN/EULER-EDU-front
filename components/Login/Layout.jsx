@@ -58,19 +58,29 @@ const Input = (props) => {
     paddingLeft: '10px',
     paddingRight: '10px'
   }
+  const onKeyUp = () => {
+    if (window.event.keyCode === 13) {
+      props.onEnter();
+    }
+  }
   return (
     <div style={ styleCont }>
       <input
         style={ styleInput }
         type={ props.type }
         placeholder={ props.placeholder }
+        value={ props.value }
+        onChange={ (e) => props.update(e.target.value) }
+        onKeyUp={ onKeyUp }
       />
     </div>
   )
 }
 Input.defaultProps = {
   type: 'txt',
-  placeholder: ''
+  placeholder: '',
+  update: () => {},
+  onEnter: () => {}
 }
 
 const BtnLogin = (props) => {
@@ -108,4 +118,20 @@ BtnLogin.defaultProps = {
   onClick: () => {}
 }
 
-export { Skeleton, Input, BtnLogin }
+const RedMsg = (props) => {
+  const style = {
+    paddingTop: '15px',
+    textAlign: 'center',
+    fontSize: '13px',
+    color: 'red'
+  }
+  if (!props.children) return null;
+  return (
+    <div
+      style={ style }
+      className="FLight"
+    >{ props.children }</div>
+  )
+}
+
+export { Skeleton, Input, BtnLogin, RedMsg }
