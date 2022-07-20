@@ -6,7 +6,7 @@ export default function() {
   return (
     <div>
       <Head>
-        <title>오일러EDU : 학부모 시스템</title>
+        <title>학부모 시스템 : 오일러EDU</title>
       </Head>
       <Layout page="main">
         <Main />

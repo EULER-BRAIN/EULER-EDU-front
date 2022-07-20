@@ -5,7 +5,7 @@ export default function() {
   return (
     <div className="ROOT">
       <Head>
-        <title>오일러EDU : 어워드</title>
+        <title>어워드 : 오일러EDU</title>
       </Head>
       <Gallery />
     </div>

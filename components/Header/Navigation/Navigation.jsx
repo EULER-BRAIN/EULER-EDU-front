@@ -109,6 +109,17 @@ const Bar = (props) => {
     height: '13px',
     borderTop: '1px solid rgb(206,206,206)',
   }
+  const styleName = {
+    paddingLeft: '20px',
+    fontSize: '14px',
+    color: 'gray'
+  }
+  const styleLogout = {
+    position: 'absolute',
+    bottom: '0px', right: '20px',
+    fontSize: '14px',
+    textDecoration: 'underline'
+  }
 
   let bodyTop = (
     <div>
@@ -124,17 +135,20 @@ const Bar = (props) => {
     </div>
   )
   if (props.loginInfo?.isTeacher) {
-    const styleName = {
-      paddingLeft: '20px',
-      fontSize: '14px',
-      color: 'gray'
-    }
     bodyTop = (
       <div>
-        <div>
+        <div style={{ position: 'relative' }}>
           <div style={ styleName }>
             { props.loginInfo?.name } 님
           </div>
+          <Link to="/login/logout">
+            <div
+              style={ styleLogout }
+              onClick={ props.onClose }
+            >
+              로그아웃
+            </div>
+          </Link>
         </div>
         <div style={ styleLine } />
         <BarItem

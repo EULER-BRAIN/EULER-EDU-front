@@ -6,7 +6,7 @@ export default function() {
   return (
     <div>
       <Head>
-        <title>오일러EDU : 관리</title>
+        <title>관리 : 오일러EDU</title>
       </Head>
       <Layout page="eRecord">
         <ERecord />

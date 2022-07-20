@@ -39,7 +39,8 @@ const TeacherLogin = () => {
         const res = await axiosEDU.post("/login/try/teacher", { id, pw });
         const result = res?.data?.result;
         if (result) {
-          router.push('/management');
+          // FIXME : replace url
+          router.replace('/');
         }
         else {
           const msg = res?.data?.msg;

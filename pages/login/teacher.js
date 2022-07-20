@@ -5,7 +5,7 @@ export default function() {
   return (
     <div>
       <Head>
-        <title>오일러EDU : 선생님 로그인</title>
+        <title>선생님 로그인 : 오일러EDU</title>
       </Head>
       <TeacherLogin />
     </div>
