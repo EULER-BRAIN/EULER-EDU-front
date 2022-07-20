@@ -10,6 +10,7 @@ const Layout = (props) => {
   useEffect(() => {
     axiosEDU.get('/login/getInfo').then(({ data }) => {
       if (!data.isTeacher) {
+        // FIXME
         router.replace('/');
       }
       else {
