@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import HeaderEmpty from '@components/Header/HeaderEmpty'
+import { Loading as Load, LoadingDiv as LoadD } from '@components/Layout/Loading';
 import Footer from '@components/Footer/Footer'
 
 const Skeleton = (props) => {
@@ -109,7 +110,17 @@ const BtnLogin = (props) => {
       className="BTNC"
       onClick={ onClick }
     >
-      { props.children }
+      {
+        props.unable ? (
+          <div>
+            <div style={{ height: '10px' }} />
+            <Load
+              size="20px"
+              color="white"
+            />
+          </div>
+        ) : props.children
+      }
     </animated.div>
   )
 }
@@ -134,4 +145,13 @@ const RedMsg = (props) => {
   )
 }
 
-export { Skeleton, Input, BtnLogin, RedMsg }
+const Loading = () => {
+  return (
+    <div>
+      <div style={{ height: '30px' }} />
+      <LoadD />
+    </div>
+  )
+}
+
+export { Skeleton, Input, BtnLogin, RedMsg, Loading }

@@ -6,14 +6,16 @@ const Loading = (props) => {
     loop: true,
     config: { duration: 2000 },
     from: { 
+      position: 'relative',
       width: props.size,
       height: props.size,
       transform: 'rotate(0deg)'
     },
     to: {
+      position: 'relative',
       width: props.size,
       height: props.size,
-      transform: 'rotate(${ 360 }deg)'
+      transform: 'rotate(360deg)'
   }
   });
   return (
@@ -24,6 +26,9 @@ const Loading = (props) => {
     }}>
       <animated.div style={ style }>
         <BiLoaderAlt style={{
+          position: 'absolute',
+          top: '0px',
+          left: '0px',
           width: '100%',
           height: '100%',
           fill: props.color

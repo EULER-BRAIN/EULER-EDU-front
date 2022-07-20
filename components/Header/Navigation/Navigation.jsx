@@ -1,7 +1,7 @@
 import { useSpring, animated } from 'react-spring'
 import Link from '@components/Layout/Link'
 
-import { MdClose, MdExitToApp } from 'react-icons/md';
+import { MdClose, MdExitToApp, MdNavigateNext } from 'react-icons/md';
 
 const Background = (props) => {
   const style = useSpring({
@@ -22,11 +22,13 @@ const Background = (props) => {
 
 const BarItem = (props) => {
   const style = {
+    position: 'relative',
     marginLeft: '10px', marginRight: '10px',
-    height: '30px'
+    height: '30px',
+    paddingBottom: '7px'
   }
   const styleText = {
-    paddingLeft: '5px', paddingRight: '5px',
+    paddingLeft: '10px', paddingRight: '5px',
     height: '30px', lineHeight: '30px',
     fontSize: '16px'
   }
@@ -36,6 +38,12 @@ const BarItem = (props) => {
     marginTop: '5px',
     verticalAlign: 'top',
     fill: 'rgb(120,120,120)'
+  }
+  const styleNextIcon = {
+    position: 'absolute',
+    right: '5px', top: '3px',
+    width: '24px', height: '24px',
+    fill: 'rgb(206,206,206)'
   }
 
   const body = (
@@ -52,6 +60,7 @@ const BarItem = (props) => {
           <MdExitToApp style={ styleExit } /> : null
         }
       </div>
+      <MdNavigateNext style={ styleNextIcon } />
     </div>
   )
   if (props.link) {
@@ -95,6 +104,55 @@ const Bar = (props) => {
     width: '100%', height: '100%',
     fill: 'rgb(70,70,70)'
   }
+  const styleLine = {
+    marginTop: '7px',
+    height: '13px',
+    borderTop: '1px solid rgb(206,206,206)',
+  }
+
+  let bodyTop = (
+    <div>
+      <BarItem
+        link="/login/parent"
+        onClick={ props.onClose }
+      >학부모 로그인</BarItem>
+      <BarItem
+        link="/login/teacher"
+        onClick={ props.onClose }
+      >선생님 로그인</BarItem>
+      <div style={ styleLine } />
+    </div>
+  )
+  if (props.loginInfo?.isTeacher) {
+    const styleName = {
+      paddingLeft: '20px',
+      fontSize: '14px',
+      color: 'gray'
+    }
+    bodyTop = (
+      <div>
+        <div>
+          <div style={ styleName }>
+            { props.loginInfo?.name } 님
+          </div>
+        </div>
+        <div style={ styleLine } />
+        <BarItem
+          link="/management"
+          onClick={ props.onClose }
+        >학원 관리 시스템</BarItem>
+      </div>
+    );
+  }
+
+  let bodyBottom = null;
+  /*if (props.loginInfo?.isLogined) {
+    bodyBottom = (
+      <div>
+        <div style={ styleLine } />
+      </div>
+    );
+  }*/
 
   return (
     <animated.div style={ style }>
@@ -107,14 +165,7 @@ const Bar = (props) => {
           <MdClose style={ styleCloseIcon } />
         </div>
       </div>
-      <BarItem
-        link="/login/parent"
-        onClick={ props.onClose }
-      >학부모 로그인</BarItem>
-      <BarItem
-        link="/login/teacher"
-        onClick={ props.onClose }
-      >선생님 로그인</BarItem>
+      { bodyTop }
       <BarItem
         link="/awards"
         onClick={ props.onClose }
@@ -134,6 +185,7 @@ const Bar = (props) => {
         onClick={ props.onClose }
         newTab
       >오일러OJ</BarItem>
+      { bodyBottom }
       <div style={{ height: '70px' }} />
     </animated.div>
   )
@@ -153,6 +205,7 @@ const Navigation = (props) => {
         onClose={ props.onClose }
       />
       <Bar
+        loginInfo={ props.loginInfo }
         popup={ props.popup }
         onClose={ props.onClose }
       />

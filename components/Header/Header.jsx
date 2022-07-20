@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router'
 import Image from 'next/image';
 import Link from '@components/Layout/Link';
 import Navigation from './Navigation/Navigation';
+import axiosEDU from '@tools/axiosEDU';
 
 import svgLogo from "@public/eulerLogo/logo.svg";
 import { MdMenu } from 'react-icons/md';
@@ -33,6 +35,19 @@ const Header = () => {
     fill: 'rgb(70,70,70)'
   }
 
+  const router = useRouter();
+  const [loginInfo, setLoginInfo] = useState({});
+  useEffect(() => {
+    axiosEDU.get('/login/getInfo').then(({ data }) => {
+      setLoginInfo({
+        isStudent: data.isStudent,
+        isTeacher: data.isTeacher,
+        isLogined: data.isLogined,
+        name: data.name
+      })
+    })
+  }, [router.pathname])
+
   return (
     <>
       <div style={ style }>
@@ -54,6 +69,7 @@ const Header = () => {
         </div>
       </div>
       <Navigation
+        loginInfo={ loginInfo }
         popup={ isNaviPopup }
         onClose={ () => setNaviPopup(false) }
       />
