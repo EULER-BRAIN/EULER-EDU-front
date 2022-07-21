@@ -32,6 +32,17 @@ const Layout = (props) => {
             ]
           });
         }
+        if (data.level === 'teacher' || data.level === 'administrator') {
+          list.push({
+            name: '캠퍼스 관리',
+            list: [
+              { name: '메인/공지', link: '/management/campus/notice' },
+              { name: '메인/포스터', link: '/management/campus/poster' },
+              { name: '메인/캠퍼스 정보', link: '/management/campus/main' },
+              { name: '선생님', link: '/management/campus/teacher' },
+            ]
+          });
+        }
         setNaviList(list);
       }
     });

@@ -60,7 +60,7 @@ const TopFlexBtn = (props) => {
       style={ styleBtn }
       className="BTNC ND"
     >
-      어워드 추가
+      { props.children }
     </animated.div>
   )
 }
