@@ -116,7 +116,6 @@ const NaviLeft = (props) => {
             <NaviListItem
               name={ item.name }
               list={ item.list }
-              page={ props.page }
               key={ index }
             />
           )
@@ -203,7 +202,6 @@ const NaivMobile = (props) => {
                 <NaivMobileItem 
                   name={ item.name }
                   list={ item.list }
-                  page={ props.page }
                   key={ index }
                 />
               )) }
@@ -232,7 +230,6 @@ const BLayout = (props) => {
               <NaviLeft
                 name={ props.naviName }
                 list={ props.naviList }
-                page={ props.page }
               />
               <div style={{
                 width: 'calc(100% - 270px)'
@@ -256,7 +253,6 @@ const BLayout = (props) => {
             <NaivMobile
               name={ props.naviName }
               list={ props.naviList }
-              page={ props.page }
             />
             <div style={{ height: '15px' }}/>
             <RLayout>

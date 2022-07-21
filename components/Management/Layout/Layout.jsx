@@ -13,8 +13,7 @@ const Layout = (props) => {
       if (!data.isTeacher) {
         // FIXME
         router.replace('/');
-      }
-      else {
+      } else {
         const list = [];
         if (data.level === 'administrator') {
           list.push({
@@ -26,11 +25,16 @@ const Layout = (props) => {
               { name: '오일러BLOG', link: '/management/main/blog', id: 'main/blog' },
             ]
           });
+          list.push({
+            name: '시스템 관리',
+            list: [
+            ]
+          });
         }
         setNaviList(list);
       }
     });
-  }, []);
+  }, [router.pathname]);
 
   return (
     <div>
@@ -40,7 +44,6 @@ const Layout = (props) => {
       <BLayout
         naviName="학원 관리"
         naviList={ naviList }
-        page={ props.page }
       >
         { props.children }
       </BLayout>

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import BLayout from "@components/Layout/BLayout";
@@ -12,8 +13,7 @@ const Layout = (props) => {
       if (!data.isParent) {
         // FIXME
         router.replace('/');
-      }
-      else {
+      } else {
         setNaviList([
           {
             name: '학생 기록 확인',
@@ -26,7 +26,7 @@ const Layout = (props) => {
         ]);
       }
     });
-  }, []);
+  }, [router.pathname]);
 
   return (
     <div>
@@ -36,7 +36,6 @@ const Layout = (props) => {
       <BLayout
         naviName="학부모 시스템"
         naviList={ naviList }
-        page={ props.page }
       >
         { props.children }
       </BLayout>
