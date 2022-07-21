@@ -64,5 +64,49 @@ const TopFlexBtn = (props) => {
     </animated.div>
   )
 }
+const TopFlexText = (props) => {
+  const style = {
+    height: '20px',
+    lineHeight: '20px',
+    fontSize: '15px'
+  }
+  return (
+    <div style={ style }>
+      { props.children }
+    </div>
+  )
+}
+const TopFlexTag = (props) => {
+  const style = {
+    height: '20px',
+    lineHeight: '20px',
+    paddingLeft: '5px',
+    paddingRight: '5px',
+    borderRadius: '4px',
+    background: 'rgba(194,21,28,0.5)',
+    fontSize: '13px',
+    color: 'white'
+  }
+  const styleText1 = {
+    fontSize: '12px',
+    paddingRight: '3px',
+    color: 'gray'
+  }
+  return (
+    <div style={ style }>
+      <span style={ styleText1 }>
+        { props.tagName }
+      </span>
+      { props.children }
+    </div>
+  )
+}
 
-export { Title, Content, BtmEmpty, TopFlexBtn }
+export {
+  Title,
+  Content,
+  BtmEmpty,
+  TopFlexBtn,
+  TopFlexText,
+  TopFlexTag
+}
