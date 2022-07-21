@@ -19,15 +19,16 @@ const Layout = (props) => {
           list.push({
             name: '메인 페이지 관리',
             list: [
-              { name: '갤러리', link: '/management/main/gallery', id: 'main/gallery' },
-              { name: '어워드', link: '/management/main/award', id: 'main/award' },
-              { name: '오일러BOOKS', link: '/management/main/books', id: 'main/books' },
-              { name: '오일러BLOG', link: '/management/main/blog', id: 'main/blog' },
+              { name: '갤러리', link: '/management/main/gallery' },
+              { name: '어워드', link: '/management/main/award' },
+              { name: '오일러BOOKS', link: '/management/main/books' },
+              { name: '오일러BLOG', link: '/management/main/blog' },
             ]
           });
           list.push({
             name: '시스템 관리',
             list: [
+              { name: '캠퍼스', link: '/management/system/campus' },
             ]
           });
         }

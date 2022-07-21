@@ -18,9 +18,9 @@ const Layout = (props) => {
           {
             name: '학생 기록 확인',
             list: [
-              { name: '수업', link: '/parentSystem/lectures', id: "lectures" },
-              { name: '시험', link: '/parentSystem/tests', id: "tests" },
-              { name: '등/하원 기록', link: '/parentSystem/eRecord', id: "eRecord" },
+              { name: '수업', link: '/parentSystem/lectures' },
+              { name: '시험', link: '/parentSystem/tests' },
+              { name: '등/하원 기록', link: '/parentSystem/eRecord' },
             ]
           }
         ]);

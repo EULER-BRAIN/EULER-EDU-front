@@ -104,7 +104,10 @@ const NaviLeft = (props) => {
     borderBottom: '2px solid #c2151c',
   }
   return (
-    <div style={{ width: '270px' }}>
+    <div
+      style={{ width: '270px' }}
+      className="ND"
+    >
       <div style={{
         paddingLeft: '20px',
         width: '250px',
@@ -189,7 +192,10 @@ const NaivMobile = (props) => {
     top: '0px', right: '0px'
   }
   return (
-    <div style={ style }>
+    <div
+      style={ style }
+      className="ND"
+    >
       <HeaderEmpty />
       <animated.div style={ styleBody }>
         <RLayout>
