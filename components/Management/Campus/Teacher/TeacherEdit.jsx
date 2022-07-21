@@ -4,7 +4,7 @@ import { Title, Content, TopFlexBtn, TopFlexText, TopFlexSaved, TopInput } from 
 import { LoadingDiv } from "@components/Layout/Loading"
 import { useCampusOnManagement } from "@tools/useSystemProp";
 import axiosEDU from "@tools/axiosEDU";
-import { level2str } from "@tools/trans";
+import { level2str, getRandomPassword } from "@tools/trans";
 import regExpTest from "@tools/regExpTest";
 
 const TeacherEditTop = (props) => {
@@ -36,7 +36,10 @@ const TeacherEdit = (props) => {
       }).then(({ data }) => {
         if (data.teacher) {
           setInfo(data.teacher);
-          setInputValue(data.teacher);
+          setInputValue({
+            ...data.teacher,
+            password: ''
+          });
         } 
         else {
           // FIXME
@@ -65,17 +68,42 @@ const TeacherEdit = (props) => {
   const onClickName = () => {
     const name = inputValue.name;
     if (!regExpTest.name(name)) {
-      alert('성함이 "^[A-Za-z가-힣ㄱ-ㅎㅏ-ㅣ0-9-_ ]{2,15}$"을 만족해야 합니다')
+      alert('성함은 "^[A-Za-z가-힣ㄱ-ㅎㅏ-ㅣ0-9-_ ]{2,15}$"을 만족해야 합니다')
       return;
     }
     if (!onCall.current) {
+      onCall.current = true;
       axiosEDU.post('/management/campus/teacher/edit/name', {
         id: props.id,
         campus: campus,
         name: name
       }).then(({ data }) => {
+        onCall.current = false;
         if (data.teacher) {
           setInfo(data.teacher);
+        } else {
+          alert('Permission denied : 요청 거부됨')
+        }
+      })
+    }
+  }
+  const onClickPw = () => {
+    const password = inputValue.password;
+    if (!regExpTest.loginPw(password)) {
+      alert('비밀번호는 "^.{10,30}$"을 만족해야 합니다')
+      return;
+    }
+    if (!onCall.current) {
+      onCall.current = true;
+      axiosEDU.post('/management/campus/teacher/edit/password', {
+        id: props.id,
+        campus: campus,
+        password: password
+      }).then(({ data }) => {
+        onCall.current = false;
+        if (data.teacher) {
+          setInfo(data.teacher);
+          alert('비밀번호가 성공적으로 수정되었습니다')
         } else {
           alert('Permission denied : 요청 거부됨')
         }
@@ -126,14 +154,27 @@ const TeacherEdit = (props) => {
                   <TopFlexText>비밀번호</TopFlexText>
                 </div>
                 <TopInput
-                  value={ info.password }
+                  value={ inputValue.password }
+                  onChange={ (x) => {
+                    if (RegExp("^.{0,30}$").test(x)) {
+                      setInputValue({
+                        ...inputValue,
+                        password: x
+                      })
+                    }
+                  } }
                 />
                 <div style={ styleLayDBtm }>
                   <TopFlexBtn
-                    onClick={ () => {} }
+                    onClick={ () => {
+                      setInputValue({
+                        ...inputValue,
+                        password: getRandomPassword()
+                      })
+                    } }
                   >랜덤 비밀번호</TopFlexBtn>
                   <TopFlexBtn
-                    onClick={ () => {} }
+                    onClick={ onClickPw }
                   >비밀번호 수정</TopFlexBtn>
                 </div>
               </div>

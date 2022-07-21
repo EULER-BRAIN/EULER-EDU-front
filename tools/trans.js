@@ -5,4 +5,16 @@ const level2str = (x) => {
   return x
 }
 
-export { level2str };
+const getRandomPassword = () => {
+  // const randomKeySet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-_=+?/';
+  const randomKeySet = '0123456789abcdefghijklmnopqrstuvwxyz';
+  const keyLength = 15;
+  let key = '';
+  for(var i=0; i<keyLength; i++){
+      const index = Math.floor(Math.random() * randomKeySet.length);
+      key = key + randomKeySet.charAt(index);
+  }
+  return key;
+}
+
+export { level2str, getRandomPassword };
