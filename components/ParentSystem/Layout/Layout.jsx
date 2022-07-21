@@ -29,13 +29,18 @@ const Layout = (props) => {
   }, []);
 
   return (
-    <BLayout
-      naviName="학부모 시스템"
-      naviList={ naviList }
-      page={ props.page }
-    >
-      { props.children }
-    </BLayout>
+    <div>
+      <Head>
+        <title>학부모 시스템 : 오일러EDU</title>
+      </Head>
+      <BLayout
+        naviName="학부모 시스템"
+        naviList={ naviList }
+        page={ props.page }
+      >
+        { props.children }
+      </BLayout>
+    </div>
   )
 }
 

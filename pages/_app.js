@@ -1,10 +1,31 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import Header from '@components/Header/Header'
+import SkeletonManagement from '@components/Management/Layout/Layout'
+import SkeletonParentSystem from '@components/ParentSystem/Layout/Layout'
 
 import '@styles/globals.css'
 import '@styles/fonts.css'
-
 export default function({ Component, pageProps }) {
+  const router = useRouter();
+  const routerPath = router.pathname.split('/').filter(Boolean);
+
+  let body = <Component { ...pageProps } />;
+  if (routerPath?.[0] === 'management') {
+    body = (
+      <SkeletonManagement>
+        { body }
+      </SkeletonManagement>
+    );
+  }
+  if (routerPath?.[0] === 'parentSystem') {
+    body = (
+      <SkeletonParentSystem>
+        { body }
+      </SkeletonParentSystem>
+    );
+  }
+
   return (
     <div>
       <Head>
@@ -22,7 +43,7 @@ export default function({ Component, pageProps }) {
         />
       </Head>
       <Header />
-      <Component { ...pageProps } />
+      { body }
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import BLayout from "@components/Layout/BLayout";
@@ -32,13 +33,18 @@ const Layout = (props) => {
   }, []);
 
   return (
-    <BLayout
-      naviName="학원 관리"
-      naviList={ naviList }
-      page={ props.page }
-    >
-      { props.children }
-    </BLayout>
+    <div>
+      <Head>
+        <title>관리 : 오일러EDU</title>
+      </Head>
+      <BLayout
+        naviName="학원 관리"
+        naviList={ naviList }
+        page={ props.page }
+      >
+        { props.children }
+      </BLayout>
+    </div>
   )
 }
 
