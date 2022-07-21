@@ -4,6 +4,7 @@ import { LoadingDiv } from "@components/Layout/Loading"
 import Link from "@components/Layout/Link";
 import { useCampusOnManagement } from "@tools/useSystemProp";
 import axiosEDU from "@tools/axiosEDU";
+import { level2str } from "@tools/trans";
 
 const TeacherTop = (props) => {
   return (
@@ -38,7 +39,7 @@ const TeacherTableItem = (props) => {
         >{ props.id }</TopFlexTag>
         <TopFlexTag
           tagName="관리 권한"
-        >{ props.level }</TopFlexTag>
+        >{ level2str(props.level) }</TopFlexTag>
         <TopFlexTag
           tagName="소속 캠퍼스"
         >{ props.campus }</TopFlexTag>

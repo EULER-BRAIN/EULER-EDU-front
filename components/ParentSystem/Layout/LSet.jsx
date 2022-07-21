@@ -57,6 +57,7 @@ const TopFlexBtn = (props) => {
     <animated.div
       onMouseEnter={ () => setHover(true) }
       onMouseLeave={ () => setHover(false) }
+      onClick={ props.onClick }
       style={ styleBtn }
       className="BTNC ND"
     >
@@ -64,6 +65,10 @@ const TopFlexBtn = (props) => {
     </animated.div>
   )
 }
+TopFlexBtn.defaultProps = {
+  onClick: () => {}
+}
+
 const TopFlexText = (props) => {
   const style = {
     height: '20px',
@@ -76,6 +81,7 @@ const TopFlexText = (props) => {
     </div>
   )
 }
+
 const TopFlexTag = (props) => {
   const style = {
     height: '20px',
@@ -101,6 +107,52 @@ const TopFlexTag = (props) => {
     </div>
   )
 }
+const TopFlexSaved = (props) => {
+  const style = {
+    width: '18px',
+    height: '18px',
+    borderRadius: '10px',
+    background: props.token ? '#81c147' : 'rgba(194,21,28,0.5)',
+  }
+
+  return (
+    <div style={ style }>
+
+    </div>
+  )
+}
+
+const TopInput = (props) => {
+  const styleCont = {
+    position: 'relative',
+    height: '30px',
+    border: '1px solid rgb(200,200,200)',
+  }
+  const styleInput = {
+    width: 'calc(100% - 20px)',
+    height: '100%',
+    border: 'none',
+    outline: 'none',
+    paddingLeft: '10px',
+    paddingRight: '10px'
+  }
+  return (
+    <div style={ styleCont }>
+      <input
+        style={ styleInput }
+        type={ props.type }
+        placeholder={ props.placeholder }
+        value={ props.value }
+        onChange={ (e) => props.onChange(e.target.value) }
+      />
+    </div>
+  )
+}
+TopInput.defaultProps = {
+  type: 'txt',
+  placeholder: '',
+  onChange: () => {},
+}
 
 export {
   Title,
@@ -108,5 +160,7 @@ export {
   BtmEmpty,
   TopFlexBtn,
   TopFlexText,
-  TopFlexTag
+  TopFlexTag,
+  TopFlexSaved,
+  TopInput
 }
