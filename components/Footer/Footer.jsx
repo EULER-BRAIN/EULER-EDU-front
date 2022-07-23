@@ -5,9 +5,15 @@ import RLayout from "@components/Layout/RLayout"
 import FooterEmpty from "./FooterEmpty"
 
 import svgLogo from '@public/eulerLogo/logo.gray.svg'
+import imgBook from './logo/logo_book.png';
+import imgInsta from './logo/logo_instagram.png';
+import imgBand from './logo/logo_band.png';
+import imgBlog from './logo/logo_blog.png';
+import { AiFillFacebook, AiFillYoutube } from 'react-icons/ai';
 
 const AcSite = (props) => {
   const style = {
+    position: 'relative',
     width: '30px', height: '30px',
     background: 'rgb(200,200,200)',
     borderRadius: '7px',
@@ -15,8 +21,18 @@ const AcSite = (props) => {
   }
 
   return (
-    <div style={ style }>
-    </div>
+    <a
+      href={ props.href }
+      target="_blank"
+      rel="noreferrer"
+    >
+      <div
+        style={ style }
+        className="ND"
+      >
+        { props.children }
+      </div>
+    </a>
   )
 }
 const Lay1 = () => {
@@ -41,12 +57,86 @@ const Lay1 = () => {
       display: 'flex',
       gap: '6px'
     }}>
-      <AcSite />
-      <AcSite />
-      <AcSite />
-      <AcSite />
-      <AcSite />
-      <AcSite />
+      <AcSite href="https://smartstore.naver.com/eulerbooks">
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'rgb(2,199,60)'
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '2px', left: '2px',
+            width: '26px', height: '26px'
+          }}>
+            <Image
+              src={ imgBook }
+              width={ 26 }
+              height={ 26 }
+            />
+          </div>
+        </div>
+      </AcSite>
+      <AcSite href="https://www.youtube.com/channel/UCQQJLCWcgAvrWRdZaxLUXJQ">
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'rgb(211,39,45)'
+        }}>
+          <AiFillYoutube
+            style={{
+              position: 'absolute',
+              top: '15%', left: '15%',
+              width: '70%', height: '70%',
+              fill: 'white'
+            }}
+          />
+        </div>
+      </AcSite>
+      <AcSite href="https://www.instagram.com/euler_lab/">
+        <Image
+          src={ imgInsta }
+          width={ 30 }
+          height={ 30 }
+        />
+      </AcSite>
+      <AcSite href="https://www.facebook.com/euleredu">
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'white'
+        }}>
+          <AiFillFacebook
+            style={{
+              position: 'absolute',
+              top: '-15%', left: '-15%',
+              width: '130%', height: '130%',
+              fill: 'rgb(12,76,162)'
+            }}
+          />
+        </div>
+      </AcSite>
+      <AcSite href="https://band.us/@euler">
+        <Image
+          src={ imgBand }
+          width={ 30 }
+          height={ 30 }
+        />
+      </AcSite>
+      <AcSite href="https://blog.naver.com/euleredu">
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'rgb(2,192,57)'
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '2px', left: '2px',
+            width: '26px', height: '26px'
+          }}>
+            <Image
+              src={ imgBlog }
+              width={ 26 }
+              height={ 26 }
+            />
+          </div>
+        </div>
+      </AcSite>
     </div>
   )
 
