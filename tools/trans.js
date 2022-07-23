@@ -17,4 +17,9 @@ const getRandomPassword = () => {
   return key;
 }
 
-export { level2str, getRandomPassword };
+const date2Str = (x) => {
+  const t = new Date(x);
+  return `${ t.getFullYear() }년 ${ t.getMonth()+1 }월 ${ t.getDate() }일 ${ t.getHours() }시 ${ t.getMinutes() }분`;
+}
+
+export { level2str, getRandomPassword, date2Str };
