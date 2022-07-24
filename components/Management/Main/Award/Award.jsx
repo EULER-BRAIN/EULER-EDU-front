@@ -13,7 +13,7 @@ const AwardTop = () => {
       paddingBottom: '10px',
       borderBottom: '1px solid rgb(206,206,206)',
     }}>
-      <Link>
+      <Link to="/management/main/award/add">
         <TopFlexBtn>어워드 추가</TopFlexBtn>
       </Link>
     </div>
