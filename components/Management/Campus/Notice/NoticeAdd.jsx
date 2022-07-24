@@ -30,7 +30,7 @@ const NoticeAdd = (props) => {
   const onCall = useRef(null);
   const onAdd = () => {
     if (!regExpTest.noticeTitle(title)) {
-      return alert('제목은 "^.{1,40}$"을 만족해야 합니다')
+      return alert('제목은 ' + regExpTest.noticeTitle.toString()+' 을 만족해야 합니다')
     }
     const content = editorRef.current?.getInstance().getMarkdown();
     if (!content) {

@@ -52,8 +52,7 @@ const TeacherEdit = (props) => {
   const onClickName = () => {
     const name = inputValue.name;
     if (!regExpTest.name(name)) {
-      alert('성함은 "^[A-Za-z가-힣ㄱ-ㅎㅏ-ㅣ0-9-_ ]{2,15}$"을 만족해야 합니다')
-      return;
+      return alert('성함은 ' + regExpTest.name.toString()+' 을 만족해야 합니다')
     }
     if (!onCall.current) {
       onCall.current = true;
@@ -74,8 +73,7 @@ const TeacherEdit = (props) => {
   const onClickPw = () => {
     const password = inputValue.password;
     if (!regExpTest.loginPw(password)) {
-      alert('비밀번호는 "^.{10,30}$"을 만족해야 합니다')
-      return;
+      return alert('비밀번호는 ' + regExpTest.loginPw.toString()+' 을 만족해야 합니다')
     }
     if (!onCall.current) {
       onCall.current = true;
