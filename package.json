@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@toast-ui/react-editor": "^3.1.8",
     "axios": "^0.27.2",
     "next": "^12.1.7-canary.45",
     "query-string": "^7.1.1",
