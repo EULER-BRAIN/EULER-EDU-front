@@ -9,39 +9,83 @@ import Gallery from './Gallery'
 import Footer from '@components/Footer/Footer'
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
 import getS3ImgUrl from '@tools/getS3ImgUrl'
+import LoadingDiv from '@components/Layout/Loading'
+import Link from '@components/Layout/Link'
+import { date2Str2 } from '@tools/trans'
 import axiosEDU from '@tools/axiosEDU'
 
 import { FcPhone, FcGraduationCap } from 'react-icons/fc'
+import { MdSchedule } from 'react-icons/md';
 
 const NoticeItem = (props) => {
   const [isHover, setHover] = useState(false);
   const style = useSpring({
     height: '30px',
-    lineHeight: '30px',
-    paddingLeft: '8px',
-    paddingRight: '8px',
+    position: 'relative',
     overflow: 'hidden',
     borderBottom: '1px solid rgb(206, 206, 206)',
     background: `rgba(120,120,120,${ isHover ? 0.1 : 0 })`,
     config: { duration: 100 }
   })
+  const styleTitle = {
+    position: 'absolute',
+    top: '0px',
+    left: '10px',
+    right: '80px',
+    height: '30px',
+    lineHeight: '30px',
+    overflow: 'hidden',
+    fontSize: '15px',
+  }
+  const styleIcon = {
+    verticalAlign: 'middle',
+    marginTop: '-2px',
+    width: '16px',
+    height: '16px',
+  }
+  const styleDate = {
+    position: 'absolute',
+    top: '0px',
+    right: '10px',
+    height: '30px',
+    lineHeight: '30px',
+    color: 'gray',
+    fontSize: '12px',
+  }
 
   return (
-    <animated.div
-      style={ style }
-      onMouseEnter={ () => setHover(true) }
-      onMouseLeave={ () => setHover(false) }
-    >
-      123
-    </animated.div>
+    <Link to={ `/main/notice/content/${ props.id }` }>
+      <animated.div
+        style={ style }
+        onMouseEnter={ () => setHover(true) }
+        onMouseLeave={ () => setHover(false) }
+      >
+        <div style={ styleTitle }>
+          { props.title }
+        </div>
+        <div style={ styleDate }>
+          <MdSchedule style={ styleIcon } />
+          { date2Str2(props.date, props.dateNow) }
+        </div>
+      </animated.div>
+    </Link>
   )
 }
-const Notice = () => {
+const Notice = (props) => {
   return (
     <RLayout>
       <Layout.Title padding>공지</Layout.Title>
-      <NoticeItem />
-      <NoticeItem />
+      {
+        props.notices.map((item, index) => (
+          <NoticeItem
+            key={ index }
+            id={ item._id }
+            title={ item.title }
+            date={ item.modifyDate }
+            dateNow={ props.dateNow }
+          />
+        ))
+      }
     </RLayout>
   )
 }
@@ -269,36 +313,58 @@ const Maps = (props) => {
 }
 
 const Main = ({ id }) => {
+  const [dateNow, setDateNow] = useState(null);
+  const [notices, setNotices] = useState(null);
   const [mapInfo, setMapInfo] = useState({});
   useEffect(() => {
     axiosEDU.get(`/main/${ id }`).then(({ data }) => {
-      console.log(data);
-      setMapInfo({
-        address: data.campus.address,
-        call: data.campus.call,
-        lat: data.campus.lat,
-        lng: data.campus.lng,
-        naverMapUrl: undefined
-      })
+      if (data.campus) {
+        setNotices(data.notices);
+        setMapInfo({
+          address: data.campus.address,
+          call: data.campus.call,
+          lat: data.campus.lat,
+          lng: data.campus.lng,
+          naverMapUrl: undefined
+        })
+        setDateNow(data.dateNow)
+      }
+      else {
+        // FIXME
+      }
     })
   }, [id]);
 
   return (
     <div>
       <HeaderEmpty />
-      <Gallery />
-      <Notice />
-      <Layout.SandwichLine />
-      <Posters />
-      <Layout.SandwichLine />
-      <Maps
-        id={ id }
-        address={ mapInfo.address }
-        call={ mapInfo.call }
-        lat={ mapInfo.lat }
-        lng={ mapInfo.lng }
-        naverMapUrl={ mapInfo.naverMapUrl }
-      />
+      {
+        !dateNow ? (
+          <RLayout>
+            <div style={{ height: '20px' }} />
+            <LoadingDiv />
+          </RLayout>
+        ) : (
+          <div>
+            <Gallery />
+            <Notice
+              notices={ notices }
+              dateNow={ dateNow }
+            />
+            <Layout.SandwichLine />
+            <Posters />
+            <Layout.SandwichLine />
+            <Maps
+              id={ id }
+              address={ mapInfo.address }
+              call={ mapInfo.call }
+              lat={ mapInfo.lat }
+              lng={ mapInfo.lng }
+              naverMapUrl={ mapInfo.naverMapUrl }
+            />
+          </div>
+        )
+      }
       <Footer />
     </div>
   )

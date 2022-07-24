@@ -17,9 +17,25 @@ const getRandomPassword = () => {
   return key;
 }
 
+const timeParsePositive = (t) => {
+  t = t/1000;
+  if(t<60) return `${ parseInt(t) }초`
+  if(t<60*60) return `${ parseInt(t/60) }분`
+  if(t<60*60*24) return `${ parseInt(t/60/60) }시간`
+  if(t<60*60*24*30) return `${ parseInt(t/60/60/24) }일`
+  if(t<60*60*24*365) return `${ parseInt(t/60/60/24/30) }개월`
+  return `${ parseInt(t/60/60/24/365) }년`
+}
+
 const date2Str = (x) => {
   const t = new Date(x);
   return `${ t.getFullYear() }년 ${ t.getMonth()+1 }월 ${ t.getDate() }일 ${ t.getHours() }시 ${ t.getMinutes() }분`;
 }
 
-export { level2str, getRandomPassword, date2Str };
+const date2Str2 = (x, y) => {
+  const dateFlow = new Date(x) - new Date(y);
+  if (dateFlow > 0) return `${ timeParsePositive(dateFlow) } 후`
+  else return `${ timeParsePositive(-dateFlow) } 전`
+}
+
+export { level2str, getRandomPassword, date2Str, date2Str2 };
