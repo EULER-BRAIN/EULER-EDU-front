@@ -38,6 +38,7 @@ const AwardTableItem = (props) => {
           props.isShow ? null : (
             <TopFlexTag
               tagName="숨김"
+              background="rgba(194,21,28,0.5)"
             >어워드 비공개</TopFlexTag>
           )
         }
@@ -45,14 +46,17 @@ const AwardTableItem = (props) => {
           props.isImg ? null : (
             <TopFlexTag
               tagName="S3"
+              background="rgba(194,21,28,0.5)"
             >이미지 없음</TopFlexTag>
           )
         }
         <TopFlexTag
           tagName="등록 날짜"
+          background="#81c147"
         >{ date2Str(props.registDate) }</TopFlexTag>
         <TopFlexTag
           tagName="ID"
+          background="#81c147"
         >{ props.id }</TopFlexTag>
       </div>
       <div style={{

@@ -368,8 +368,8 @@ const Main = () => {
           </div>
         )
       }
-      <Layout.SandwichLine />
-      <Blogs />
+      { /*<Layout.SandwichLine />
+      <Blogs /> */ }
       <Footer />
     </div>
   )

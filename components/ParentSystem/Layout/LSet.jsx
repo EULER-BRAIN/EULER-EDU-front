@@ -89,7 +89,7 @@ const TopFlexTag = (props) => {
     paddingLeft: '5px',
     paddingRight: '5px',
     borderRadius: '4px',
-    background: 'rgba(194,21,28,0.5)',
+    background: props.background,
     fontSize: '13px',
     color: 'white'
   }
@@ -107,6 +107,10 @@ const TopFlexTag = (props) => {
     </div>
   )
 }
+TopFlexTag.defaultProps = {
+  background: 'rgba(194,21,28,0.5)'
+}
+
 const TopFlexSaved = (props) => {
   const style = {
     width: '18px',
