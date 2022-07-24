@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSpring, animated } from "react-spring";
 
@@ -158,6 +159,22 @@ TopInput.defaultProps = {
   onChange: () => {},
 }
 
+const TopBackLay = () => {
+  const router = useRouter();
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'left',
+      paddingBottom: '10px',
+      borderBottom: '1px solid rgb(206,206,206)',
+    }}>
+      <TopFlexBtn
+        onClick={ () => router.back() }
+      >&lt; 뒤로가기</TopFlexBtn>
+    </div>
+  )
+}
+
 export {
   Title,
   Content,
@@ -166,5 +183,6 @@ export {
   TopFlexText,
   TopFlexTag,
   TopFlexSaved,
-  TopInput
+  TopInput,
+  TopBackLay
 }

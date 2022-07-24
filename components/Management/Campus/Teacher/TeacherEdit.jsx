@@ -1,27 +1,11 @@
 import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/router";
-import { Title, Content, TopFlexBtn, TopFlexText, TopFlexSaved, TopInput } from "../../../ParentSystem/Layout/LSet"
+import { Title, Content, TopFlexBtn, TopFlexText, TopFlexSaved, TopInput, TopBackLay } from "../../../ParentSystem/Layout/LSet"
 import { LoadingDiv } from "@components/Layout/Loading"
 import { useCampusOnManagement } from "@tools/useSystemProp";
 import axiosEDU from "@tools/axiosEDU";
 import { level2str, getRandomPassword } from "@tools/trans";
 import regExpTest from "@tools/regExpTest";
-
-const TeacherEditTop = (props) => {
-  const router = useRouter();
-  return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'left',
-      paddingBottom: '10px',
-      borderBottom: '1px solid rgb(206,206,206)',
-    }}>
-      <TopFlexBtn
-        onClick={ () => router.back() }
-      >&lt; 뒤로가기</TopFlexBtn>
-    </div>
-  )
-}
 
 const TeacherEdit = (props) => {
   const campus = useCampusOnManagement();
@@ -118,7 +102,7 @@ const TeacherEdit = (props) => {
         {
           info ? (
             <div>
-              <TeacherEditTop />
+              <TopBackLay />
               <div style={ styleLayD }>
                 <div style={ styleLayDTop }>
                   <TopFlexText>성함</TopFlexText>

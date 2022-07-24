@@ -69,9 +69,6 @@ const AwardTableItem = (props) => {
         justifyContent: 'right',
         gap: '5px'
       }}>
-        <Link to={ `/management/main/award/img?id=${ props.id }` }>
-          <TopFlexBtn>이미지 수정</TopFlexBtn>
-        </Link>
         <Link to={ `/management/main/award/edit?id=${ props.id }` }>
           <TopFlexBtn>수정</TopFlexBtn>
         </Link>

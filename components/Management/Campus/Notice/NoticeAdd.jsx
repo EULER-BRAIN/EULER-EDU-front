@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { Title, Content, TopInput, TopFlexBtn, TopFlexText, TopFlexSaved } from "@components/ParentSystem/Layout/LSet"
+import { Title, Content, TopInput, TopFlexBtn, TopFlexText, TopFlexSaved, TopBackLay } from "@components/ParentSystem/Layout/LSet"
 import regExpTest from "@tools/regExpTest";
 import axiosEDU from "@tools/axiosEDU";
 import { useCampusOnManagement } from "@tools/useSystemProp";
@@ -11,21 +11,6 @@ const Editor = dynamic(
   { ssr: false }
 )
 
-const NoticeAddTop = (props) => {
-  const router = useRouter();
-  return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'left',
-      paddingBottom: '10px',
-      borderBottom: '1px solid rgb(206,206,206)',
-    }}>
-      <TopFlexBtn
-        onClick={ () => router.back() }
-      >&lt; 뒤로가기</TopFlexBtn>
-    </div>
-  )
-}
 const NoticeAdd = (props) => {
   const router = useRouter();
   const campus = useCampusOnManagement();
@@ -73,7 +58,7 @@ const NoticeAdd = (props) => {
     <div>
       <Title>공지 추가</Title>
       <Content>
-        <NoticeAddTop />
+        <TopBackLay />
         <div style={ styleLayD }>
           <div style={ styleLayDTop }>
             <TopFlexText>제목</TopFlexText>
