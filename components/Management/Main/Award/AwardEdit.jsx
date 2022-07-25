@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import LoadingDiv from "@components/Layout/Loading";
 import { Content, Title, TopBackLay, TopFlexBtn, TopFlexSaved, TopFlexText, TopInput } from "@components/ParentSystem/Layout/LSet";
 import axiosEDU from "@tools/axiosEDU";
+import axios from "axios";
 import { date2Str } from "@tools/trans";
 import getS3ImgUrl from "@tools/getS3ImgUrl";
 import regExpTest from "@tools/regExpTest";
 
 const S3Image = (props) => {
-  console.log(props.exist);
   const styleLayDBtm = {
     paddingTop: '5px',
     display: 'flex',
@@ -19,6 +19,47 @@ const S3Image = (props) => {
 
   const router = useRouter();
   const onCall = useRef(null);
+  const [image, setImage] = useState(undefined);
+  const onChange = (e) => {
+    setImage(e.target.files?.[0]);
+  }
+  const onUpload = () => {
+    if (!onCall.current && image) {
+      onCall.current = true;
+      axiosEDU.get(`/management/main/award/img/upload/${ props.id }`).then(async ({ data }) => {
+        if (data.url) {
+          try {
+            const response = await axios({
+              url: data.url,
+              method: "put",
+              data: image,
+              headers: {
+                "Content-Type": "image/png"
+              },
+            });
+            onCall.current = false;
+            if (response.status !== 200) {
+              console.log(response);
+              alert('S3 Error : 요청 거부됨')
+            }
+            else {
+              alert('이미지가 성공적으로 업로드되었습니다')
+              router.reload();
+            }
+          } catch (e) {
+            // FIXME
+            console.log(e)
+            onCall.current = false;
+            alert('S3 Error : 요청 거부됨')
+          }
+        }
+        else {
+          onCall.current = false;
+          alert('Permission denied : 요청 거부됨')
+        }
+      })
+    }
+  }
   const onDelete = () => {
     if (!onCall.current) {
       onCall.current = true;
@@ -52,11 +93,20 @@ const S3Image = (props) => {
             />
           </div>
         ) : (
-          <div style={{
-            fontSize: '14px',
-            color: 'gray'
-          }}>
-            S3에 "{ props.id }"에 해댱하는 이미지가 없습니다.
+          <div>
+            <div style={{
+              paddingBottom: '10px',
+              fontSize: '14px',
+              color: 'gray'
+            }}>
+              S3에 "{ props.id }"에 해댱하는 이미지가 없습니다.<br />
+              image/png 형식의 파일만 업로드가 가능합니다.
+            </div>
+            <input
+              type="file"
+              accept="image/png"
+              onChange={ onChange }
+            />
           </div>
         )
       }
@@ -72,7 +122,7 @@ const S3Image = (props) => {
         ) : (
           <div style={ styleLayDBtm }>
             <TopFlexBtn
-              onClick={ onDelete }
+              onClick={ onUpload }
             >
               이미지 추가
             </TopFlexBtn>
@@ -86,17 +136,15 @@ const S3Image = (props) => {
 
 const AwardEdit = (props) => {
   const [award, setAward] = useState(null);
-  const [inputValue, setInputValue] = useState();
+  const [imgFound, setImgFound] = useState();
+  const [inputValue, setInputValue] = useState({});
 
   useEffect(() => {
     axiosEDU.get(`/management/main/award/info/${ props.id }`).then(({ data }) => {
       if (data.award) {
-        const award = { 
-          ...data.award,
-          imgFound: data.imgFound
-        };
-        setAward(award);
-        setInputValue(award);
+        setAward(data.award);
+        setImgFound(data.imgFound);
+        setInputValue(data.award);
       } 
       else {
         // FIXME
@@ -284,7 +332,7 @@ const AwardEdit = (props) => {
                 </div>
                 <S3Image
                   id={ award._id }
-                  exist={ award.imgFound }
+                  exist={ imgFound }
                 />
               </div>
               <div style={ styleLayD }>

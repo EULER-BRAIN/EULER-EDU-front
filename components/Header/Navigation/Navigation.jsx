@@ -123,10 +123,10 @@ const Bar = (props) => {
 
   let bodyTop = (
     <div>
-      <BarItem
+      { /*<BarItem
         link="/login/parent"
         onClick={ props.onClose }
-      >학부모 로그인</BarItem>
+      >학부모 로그인</BarItem> */ }
       <BarItem
         link="/login/teacher"
         onClick={ props.onClose }
