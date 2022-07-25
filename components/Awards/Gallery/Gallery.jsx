@@ -1,12 +1,14 @@
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 import AwesomeSlider from 'react-awesome-slider';
 import HeaderEmpty from "@components/Header/HeaderEmpty"
 import getS3ImgUrl from '@tools/getS3ImgUrl'
-
-import 'react-awesome-slider/dist/styles.css';
 import useCompWidth from '@components/Layout/useCompWidth';
 import useCompHeight from '@components/Layout/useCompHeight';
+import axiosEDU from '@tools/axiosEDU';
+
+import 'react-awesome-slider/dist/styles.css';
 
 const AutoAdjustAward = (props) => {
   const contRef = useRef();
@@ -26,13 +28,18 @@ const AutoAdjustAward = (props) => {
     height: `${ size }px`
   }
   
+  if (!props.id) return null;
   return (
     <div
       style={ style }
       ref={ contRef }
     >
       <div style={ styleBox }>
-        { props.children }
+        <Image
+          src={ getS3ImgUrl(`awards/${ props.id }.png`) }
+          alt={ `awards/${ props.id }` }
+          layout="fill"
+        />
       </div>
     </div>
   )
@@ -64,28 +71,125 @@ const Award = (props) => {
     paddingRight: '10px',
     paddingTop: '10px'
   }
+
   return (
     <div style={ style }>
       <div style={ styleBody }>
-        <AutoAdjustAward>
-          <Image
-            src={ getS3ImgUrl(`awards/${ props.id }.png`) }
-            alt={ `awards/${ props.id }` }
-            layout="fill"
-          />
-        </AutoAdjustAward>
-        { props.id }
+        <AutoAdjustAward
+          id={ props.id }
+        />
       </div>
       <div style={ styleBottom }>
         <div style={ styleContent }>
-          Bottom - Content
+          <div
+            style={{
+              fontSize: '15px'
+            }}
+            className="FRegular"
+          >
+            { props.name ? props.name : '' }
+          </div>
+          <div
+            style={{
+              paddingTop: '6px',
+              fontSize: '13px',
+              color: 'rgb(100,100,100)'
+            }}
+          >
+            { props.content ? props.content : '' }
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-const Gallery = () => {
+const Gallery = ({ id }) => {
+  const [awards, setAwards] = useState({});
+  useEffect(() => {
+    if (awards) setAwards(undefined);
+  }, [id])
+  useEffect(() => {
+    if (!awards && id) {
+      axiosEDU.get(`/main/award/content/${ id }`).then(({ data }) => {
+        if (data.award) {
+          setAwards({
+            prev: data.awardPrev,
+            current: data.award,
+            next: data.awardNext,
+          })
+        }
+        else {
+          // FIXME
+        }
+      })
+    }
+  }, [awards])
+
+  const router = useRouter();
+  const onTransitionEnd = (x) => {
+    if (awards?.prev && x.currentIndex == 0 && awards?.prev?._id) {
+      router.push(`/awards/gallery/${ awards?.prev?._id }`);
+    }
+    if (awards?.prev && x.currentIndex == 2 && awards?.next?._id) {
+      router.push(`/awards/gallery/${ awards?.next?._id }`);
+    }
+    if (!awards?.prev && x.currentIndex == 1 && awards?.next?._id) {
+      router.push(`/awards/gallery/${ awards?.next?._id }`);
+    }
+  }
+
+  let body = (
+    <Award
+      id={ id }
+    />
+  );  
+  if (awards?.current) {
+    const sliderList = [];
+    if (awards?.prev) {
+      sliderList.push((
+        <Award
+          id={ awards?.prev?._id }
+          name={ awards?.prev?.name }
+          content={ awards?.prev?.content }
+        />
+      ))
+    }
+    sliderList.push((
+      <Award
+        id={ awards?.current?._id }
+        name={ awards?.current?.name }
+        content={ awards?.current?.content }
+      />
+    ))
+    if (awards?.next) {
+      sliderList.push((
+        <Award
+          id={ awards?.next?._id }
+          name={ awards?.next?.name }
+          content={ awards?.next?.content }
+        />
+      ))
+    }
+    body = (
+      <AwesomeSlider
+        selected={ awards?.prev ? 1 : 0 }
+        fillParent={ true }
+        infinite={ false }
+        bullets={ false }
+        onTransitionEnd={ onTransitionEnd }
+      >
+        {
+          sliderList.map((item, index) => (
+            <div key={ index }>
+              { item }
+            </div>
+          ))
+        }
+      </AwesomeSlider>
+    )
+  }
+
   return (
     <div style={{
       position: 'fixed',
@@ -99,14 +203,7 @@ const Gallery = () => {
         top: '50px', bottom: '0px',
         left: '0px', right: '0px',
       }}>
-        <AwesomeSlider
-          fillParent={ true }
-          infinite={ false }
-        >
-          <div><Award id="test01" /></div>
-          <div><Award id="test02" /></div>
-          <div><Award id="test03" /></div>
-        </AwesomeSlider>
+        { body }
       </div>
     </div>
   )
