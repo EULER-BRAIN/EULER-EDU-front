@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import NoticeContent from '@components/Main/NoticeContent'
+import NoticeContent from '@components/Notice/NoticeContent'
 import { useRouter } from 'next/router'
 
 export default function() {
