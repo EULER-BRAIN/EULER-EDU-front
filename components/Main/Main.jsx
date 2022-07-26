@@ -164,6 +164,7 @@ const BookItem = (props) => {
             src={ getS3ImgUrl(`books/${ props.id }.png`) }
             layout="fill"
             objectFit="cover"
+            alt={ `books/${ props.id }` }
           />
         </div>
         <div style={{ height: '6px' }}/>
@@ -227,6 +228,7 @@ const YotubeItem = (props) => {
           style={{
             width: `${ props.width }px`
           }}
+          alt={ `youtube/${ props.id }` }
         />
         <div style={{
           lineHeight: '19px', height: '57px',
@@ -253,7 +255,15 @@ const EulerTV = (props) => {
         justifyContent: 'space-between',
         rowGap: '14px'
       }} ref={ contRef }>
-        { props.items.map(item => <YotubeItem { ...item } width={ contWidth / 2 - 7 } />) }
+        {
+          props.items.map((item, index) => (
+            <YotubeItem
+              { ...item }
+              width={ contWidth / 2 - 7 }
+              key={ index }
+            />
+          ))
+        }
       </div>
     </>
   )

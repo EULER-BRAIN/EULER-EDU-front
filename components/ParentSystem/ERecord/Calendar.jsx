@@ -69,13 +69,13 @@ const Calendar = (props) => {
   const contWidth = useCompWidth(contRef)
 
   const headerItems = [
-    <HeaderItem text="일" />,
-    <HeaderItem text="월" />,
-    <HeaderItem text="화" />,
-    <HeaderItem text="수" />,
-    <HeaderItem text="목" />,
-    <HeaderItem text="금" />,
-    <HeaderItem text="토" />
+    <HeaderItem key={ 0 } text="일" />,
+    <HeaderItem key={ 1 } text="월" />,
+    <HeaderItem key={ 2 } text="화" />,
+    <HeaderItem key={ 3 } text="수" />,
+    <HeaderItem key={ 4 } text="목" />,
+    <HeaderItem key={ 5 } text="금" />,
+    <HeaderItem key={ 6 } text="토" />
   ];
 
   const weekDayList = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -85,11 +85,18 @@ const Calendar = (props) => {
     const list = weekDayList.map((week, index) => {
       if ((dayQueueTop === props.startDay && weekDayList[index] !== props.startDayWeek)
         || dayQueueTop > props.endDay) {
-        return <Day />;
+        return (
+          <Day key={ week } />
+        );
       }
       const day = dayQueueTop;
       dayQueueTop += 1;
-      return <Day day={ day } />
+      return (
+        <Day
+          key={ week }
+          day={ day }
+        />
+      );
     });
     weekList.push(list);
   }

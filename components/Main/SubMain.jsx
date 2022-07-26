@@ -127,7 +127,11 @@ const PosterItem = (props) => {
   )
 }
 const Posters = () => {
-  const posterList = [<PosterItem/>, <PosterItem/>, <PosterItem/>]
+  const posterList = [
+  <PosterItem key={ 0 } />,
+  <PosterItem key={ 1 } />,
+  <PosterItem key={ 2 } />
+];
 
   return (
     <div>
@@ -173,6 +177,7 @@ const MapChild = (props) => {
         <Image
           src={ getS3ImgUrl(`campus/${ props.id }.png`) }
           width={ 70 } height={ 70 }
+          alt={ `campus/${ props.id }` }
         />
       </div>
       <div

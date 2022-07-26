@@ -99,7 +99,7 @@ const S3Image = (props) => {
               fontSize: '14px',
               color: 'gray'
             }}>
-              S3에 "{ props.id }"에 해댱하는 이미지가 없습니다.<br />
+              S3에 &quot;{ props.id }&quot;에 해댱하는 이미지가 없습니다.<br />
               image/png 형식의 파일만 업로드가 가능합니다.
             </div>
             <input

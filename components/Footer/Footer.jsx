@@ -71,6 +71,7 @@ const Lay1 = () => {
               src={ imgBook }
               width={ 26 }
               height={ 26 }
+              alt="EULER BOOKS"
             />
           </div>
         </div>
@@ -95,6 +96,7 @@ const Lay1 = () => {
           src={ imgInsta }
           width={ 30 }
           height={ 30 }
+          alt="EULER Instagram"
         />
       </AcSite>
       <AcSite href="https://www.facebook.com/euleredu">
@@ -117,6 +119,7 @@ const Lay1 = () => {
           src={ imgBand }
           width={ 30 }
           height={ 30 }
+          alt="EULER Band"
         />
       </AcSite>
       <AcSite href="https://blog.naver.com/euleredu">
@@ -133,6 +136,7 @@ const Lay1 = () => {
               src={ imgBlog }
               width={ 26 }
               height={ 26 }
+              alt="EULER Blog"
             />
           </div>
         </div>
@@ -148,6 +152,7 @@ const Lay1 = () => {
         <Image
           src={ svgLogo }
           layout="fill"
+          alt="EULER"
         />
       </div>
       <div style={ styleCR }>
