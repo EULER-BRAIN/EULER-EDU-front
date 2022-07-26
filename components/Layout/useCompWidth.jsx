@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
-const useCompWidth = (contRef) => {
+const useCompWidth = (contRef, dep=[]) => {
   const getWidth = () => {
-    if (!contRef.current) return 0;
+    if (!contRef?.current) return 0;
     return contRef.current.offsetWidth;
   }
   const stateR = useRef(0);
@@ -19,7 +19,7 @@ const useCompWidth = (contRef) => {
     resizeEvent();
     window.addEventListener("resize", resizeEvent);
     return () => window.removeEventListener("resize", resizeEvent);
-  }, [contRef.current]);
+  }, [contRef?.current, ...dep]);
 
   return state;
 }

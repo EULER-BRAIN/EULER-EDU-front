@@ -65,7 +65,7 @@ const AwardsSet = () => {
   }, [awards]);
 
   const contRef = useRef();
-  const contWidth = useCompWidth(contRef);
+  const contWidth = useCompWidth(contRef, [awards]);
   const itemWidth = getAwardWidth(contWidth);
 
   return (
