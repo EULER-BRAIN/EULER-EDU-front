@@ -4,6 +4,8 @@ import { LoadingDiv } from "@components/Layout/Loading"
 import Link from "@components/Layout/Link";
 import axiosEDU from "@tools/axiosEDU";
 import { date2Str } from "@tools/trans";
+import { usePage } from "@tools/useSystemProp";
+import PageSelector from "@components/Layout/PageSelector";
 
 const AwardTop = () => {
   return (
@@ -98,17 +100,29 @@ const AwardTable = (props) => {
 }
 
 const Award = () => {
+  const page = usePage();
+  const [pageInfo, setPageInfo] = useState({});
   const [awards, setAwards] = useState(null);
+
   useEffect(() => {
-    axiosEDU.get('/management/main/award').then(({ data }) => {
-      if (data.awards) {
-        setAwards(data.awards);
-      } 
-      else {
-        // FIXME
-      }
-    })
-  }, []);
+    if (awards) setAwards(null);
+  }, [page]);
+  useEffect(() => {
+    if (!awards){
+      axiosEDU.post('/management/main/award', { page }).then(({ data }) => {
+        if (data.awards) {
+          setAwards(data.awards);
+          setPageInfo({
+            page: data.page,
+            maxPage: data.maxPage
+          })
+        } 
+        else {
+          // FIXME
+        }
+      })
+    }
+  }, [awards]);
 
   return (
     <div>
@@ -120,6 +134,12 @@ const Award = () => {
               <AwardTop />
               <AwardTable
                 awards={ awards }
+              />
+              <div style={{ height: '15px' }} />
+              <PageSelector
+                page={ pageInfo.page }
+                maxPage={ pageInfo.maxPage }
+                makeLinkTo={ x => `/management/main/award?page=${ x }` }
               />
             </div>
           ) : (
