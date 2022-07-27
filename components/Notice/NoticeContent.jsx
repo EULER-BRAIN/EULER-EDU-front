@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import { useSpring, animated } from 'react-spring'
 import RLayout from '@components/Layout/RLayout'
 import HeaderEmpty from '@components/Header/HeaderEmpty'
 import Footer from '@components/Footer/Footer'
@@ -10,6 +12,46 @@ const Viewer = dynamic(
   () => import('../Layout/TuiViewer'),
   { ssr: false }
 )
+
+const ContentLink = (props) => {
+  const [isHover, setHover] = useState(false);
+  const styleBtn = useSpring({
+    border: '1px solid rgb(206,206,206)',
+    borderRadius: '3px',
+    height: '30px',
+    lineHeight: '30px',
+    paddingLeft: '9px',
+    paddingRight: '9px',
+    fontSize: '13px',
+    background: `rgba(200,200,200,${ isHover ? 0.2 : 0 })`,
+    config: { duration: 100 }
+  });
+
+  return (
+    <div style={{
+      paddingLeft: '10px',
+      paddingRight: '10px',
+      paddingTop: '20px',
+      display: 'flex',
+      justifyContent: 'center'
+    }}>
+      <a
+        href={ props.link }
+        target="_blank"
+        rel="noreferrer"
+      >
+        <animated.div
+          style={ styleBtn }
+          onMouseEnter={ () => setHover(true) }
+          onMouseLeave={ () => setHover(false) }
+          className="ND"
+        >
+          해당 링크로 이동하기
+        </animated.div>
+      </a>
+    </div>
+  )
+}
 
 const Title = (props) => {
   const styleTitle = {
@@ -45,6 +87,8 @@ const Content = (props) => {
 
 const NoticeContent = ({ id }) => {
   const [notice, setNotice] = useState(null);
+  const router = useRouter();
+
   useEffect(() => {
     axiosEDU.get(`/main/notice/content/${ id }`).then(({ data }) => {
       if (data.notice) {
@@ -65,9 +109,17 @@ const NoticeContent = ({ id }) => {
               <Title
                 title={ notice.title }
               />
-              <Content
-                content={ notice.content }
-              />
+              {
+                notice.link ? (
+                  <ContentLink
+                    link={ notice.link }
+                  />
+                ) : (
+                  <Content
+                    content={ notice.content }
+                  />
+                )
+              }
             </RLayout>
           ) : (
             <RLayout>

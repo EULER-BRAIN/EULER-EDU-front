@@ -53,21 +53,33 @@ const NoticeItem = (props) => {
     fontSize: '12px',
   }
 
-  return (
+  const body = (
+    <animated.div
+      style={ style }
+      onMouseEnter={ () => setHover(true) }
+      onMouseLeave={ () => setHover(false) }
+    >
+      <div style={ styleTitle }>
+        { props.title }
+      </div>
+      <div style={ styleDate }>
+        <MdSchedule style={ styleIcon } />
+        { date2Str2(props.date, props.dateNow) }
+      </div>
+    </animated.div>
+  )
+
+  return props.link ? (
+    <a
+      href={ props.link }
+      target="_blank"
+      rel="noreferrer"
+    >
+      { body }
+    </a>
+  ) : (
     <Link to={ `/main/notice/content/${ props.id }` }>
-      <animated.div
-        style={ style }
-        onMouseEnter={ () => setHover(true) }
-        onMouseLeave={ () => setHover(false) }
-      >
-        <div style={ styleTitle }>
-          { props.title }
-        </div>
-        <div style={ styleDate }>
-          <MdSchedule style={ styleIcon } />
-          { date2Str2(props.date, props.dateNow) }
-        </div>
-      </animated.div>
+      { body }
     </Link>
   )
 }
@@ -80,6 +92,7 @@ const Notice = (props) => {
           <NoticeItem
             key={ index }
             id={ item._id }
+            link={ item.link }
             title={ item.title }
             date={ item.modifyDate }
             dateNow={ props.dateNow }
