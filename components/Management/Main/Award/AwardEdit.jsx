@@ -8,6 +8,7 @@ import axios from "axios";
 import { date2Str } from "@tools/trans";
 import getS3ImgUrl from "@tools/getS3ImgUrl";
 import regExpTest from "@tools/regExpTest";
+import convertImg from "@tools/convertImg";
 
 const S3Image = (props) => {
   const styleLayDBtm = {
@@ -23,34 +24,39 @@ const S3Image = (props) => {
   const onChange = (e) => {
     setImage(e.target.files?.[0]);
   }
-  const onUpload = () => {
+  const onUpload = async () => {
     if (!onCall.current && image) {
+      const imageAfter = await convertImg(image);
+      if (!imageAfter) {
+        return alert('이미지 변환에 실패하였습니다')
+      }
+
       onCall.current = true;
-      axiosEDU.get(`/management/main/award/img/upload/${ props.id }`).then(async ({ data }) => {
-        if (data.url) {
+      axiosEDU.post('/management/main/award/img/upload',{
+        id: props.id,
+        type: imageAfter.type
+      }).then(async ({ data }) => {
+        if (data.url && data.fields) {
           try {
-            const response = await axios({
-              url: data.url,
-              method: "put",
-              data: image,
-              headers: {
-                "Content-Type": "image/png"
-              },
-            });
-            onCall.current = false;
-            if (response.status !== 200) {
-              console.log(response);
-              alert('S3 Error : 요청 거부됨')
+            const formData = new FormData();
+            for (const key in data.fields) {
+              formData.append(key, data.fields[key]);
             }
-            else {
+            formData.append("file", imageAfter);
+            const res = await axios.post(data.url, formData);
+            onCall.current = false;
+            if (res.status === 204) {
               alert('이미지가 성공적으로 업로드되었습니다')
               router.reload();
+            }
+            else {
+              alert('Permission denied : 요청 거부됨')
             }
           } catch (e) {
             // FIXME
             console.log(e)
             onCall.current = false;
-            alert('S3 Error : 요청 거부됨')
+            alert('Permission denied : 요청 거부됨')
           }
         }
         else {
@@ -99,12 +105,11 @@ const S3Image = (props) => {
               fontSize: '14px',
               color: 'gray'
             }}>
-              S3에 &quot;{ props.id }&quot;에 해댱하는 이미지가 없습니다.<br />
-              image/png 형식의 파일만 업로드가 가능합니다.
+              S3에 &quot;{ props.id }&quot;에 해댱하는 이미지가 없습니다.
             </div>
             <input
               type="file"
-              accept="image/png"
+              accept="image/png, image/jpg, image/jpeg, image/heic"
               onChange={ onChange }
             />
           </div>
