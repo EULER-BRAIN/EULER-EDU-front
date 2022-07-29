@@ -36,7 +36,7 @@ const AutoAdjustAward = (props) => {
     >
       <div style={ styleBox }>
         <Image
-          src={ getS3ImgUrl(`awards/${ props.id }.png`) }
+          src={ getS3ImgUrl(`awards/${ props.id }`) }
           alt={ `awards/${ props.id }` }
           layout="fill"
         />

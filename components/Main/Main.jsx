@@ -38,7 +38,7 @@ const CampusItem = (props) => {
       <Link to={ `/main/${ props.id }` }>
         <div style={ styleImgCont }>
           <Image
-            src={ getS3ImgUrl(`campus/${ props.id }.png`) }
+            src={ getS3ImgUrl(`campus/${ props.id }`) }
             alt={ props.name }
             width={ 70 } height={ 70 }
           />
@@ -105,7 +105,7 @@ const AwardItem = (props) => {
             position: 'relative'
           }}>
           <Image
-            src={ getS3ImgUrl(`awards/${ props.id }.png`) }
+            src={ getS3ImgUrl(`awards/${ props.id }`) }
             alt={ `awards/${ props.id }` }
             layout="fill"
           />
@@ -161,7 +161,7 @@ const BookItem = (props) => {
       >
         <div style={ styleImgcontainer }>
           <Image
-            src={ getS3ImgUrl(`books/${ props.id }.png`) }
+            src={ getS3ImgUrl(`books/${ props.id }`) }
             layout="fill"
             objectFit="cover"
             alt={ `books/${ props.id }` }

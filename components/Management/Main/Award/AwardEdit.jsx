@@ -86,7 +86,7 @@ const S3Image = (props) => {
             background: 'rgb(200,200,200)'
           }}>
             <Image
-              src={ getS3ImgUrl(`awards/${ props.id }.png`) }
+              src={ getS3ImgUrl(`awards/${ props.id }`) }
               alt={ `awards/${ props.id }` }
               width={ 200 }
               height={ 200 }

@@ -188,7 +188,7 @@ const MapChild = (props) => {
         onMouseLeave={ () => setHover(false) }
       >
         <Image
-          src={ getS3ImgUrl(`campus/${ props.id }.png`) }
+          src={ getS3ImgUrl(`campus/${ props.id }`) }
           width={ 70 } height={ 70 }
           alt={ `campus/${ props.id }` }
         />

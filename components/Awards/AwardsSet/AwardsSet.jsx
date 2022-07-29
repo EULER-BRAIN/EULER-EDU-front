@@ -29,7 +29,7 @@ const AwardItem = (props) => {
           height: '100%'
         }}>
         <Image
-          src={ getS3ImgUrl(`awards/${ props.id }.png`) }
+          src={ getS3ImgUrl(`awards/${ props.id }`) }
           alt={ `awards/${ props.id }` }
           layout="fill"
         />
