@@ -60,7 +60,7 @@ const NoticeTableItem = (props) => {
         <TopFlexTag
           tagName="작성자"
           background="#81c147"
-        >{ props.author.name }</TopFlexTag>
+        >{ props.author?.name }</TopFlexTag>
         <TopFlexTag
           tagName="등록 날짜"
           background="#81c147"

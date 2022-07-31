@@ -5,5 +5,19 @@ const noticeTitle = (x) => RegExp("^.{1,40}$").test(x);
 const noticeLink = (x) => RegExp("^.{1,100}$").test(x);
 const awardName = (x) => RegExp("^.{1,30}$").test(x);
 const awardContent = (x) => RegExp("^.{1,50}$").test(x);
+const posterTitle = (x) => RegExp("^.{1,30}$").test(x);
+const posterContent = (x) => RegExp("^.{1,50}$").test(x);
+const posterLink = (x) => RegExp("^.{1,100}$").test(x);
 
-export default { loginId, loginPw, name, noticeTitle, noticeLink, awardName, awardContent };
+export default {
+  loginId,
+  loginPw,
+  name,
+  noticeTitle,
+  noticeLink,
+  awardName,
+  awardContent,
+  posterTitle,
+  posterContent,
+  posterLink,
+};

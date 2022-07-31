@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import { Content, Title, TopBackLay, TopFlexBtn, TopFlexSaved, TopFlexText, TopInput } from "@components/ParentSystem/Layout/LSet"
 import regExpTest from "@tools/regExpTest";
 import axiosEDU from "@tools/axiosEDU";
+import { useCampusOnManagement } from "@tools/useSystemProp";
 
-const AwardAdd = () => {
-  const [name, setName] = useState('');
+const PosterAdd = () => {
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [link, setLink] = useState('');
 
   const styleLayD = {
     borderBottom: '1px solid rgb(206,206,206)',
@@ -20,22 +22,28 @@ const AwardAdd = () => {
 
   const onCall = useRef(null);
   const router = useRouter();
+  const campus = useCampusOnManagement();
   const onAdd = () => {
-    if (!regExpTest.awardName(name)) {
-      return alert('제목은 ' + regExpTest.awardName.toString()+' 을 만족해야 합니다')
+    if (!regExpTest.posterTitle(title)) {
+      return alert('제목은 ' + regExpTest.posterTitle.toString()+' 을 만족해야 합니다')
     }
-    if (!regExpTest.awardContent(content)) {
-      return alert('내용은 ' + regExpTest.awardContent.toString()+' 을 만족해야 합니다')
+    if (!regExpTest.posterContent(content)) {
+      return alert('내용은 ' + regExpTest.posterContent.toString()+' 을 만족해야 합니다')
+    }
+    if (!regExpTest.posterLink(link)) {
+      return alert('Url은 ' + regExpTest.posterLink.toString()+' 을 만족해야 합니다')
     }
     if (!onCall.current) {
       onCall.current = true;
-      axiosEDU.post("/management/main/award/add",{
-        name: name,
-        content: content
+      axiosEDU.post("/management/campus/poster/add",{
+        title: title,
+        content: content,
+        link: link,
+        campus: campus,
       }).then(({ data }) => {
         onCall.current = false;
-        if (data.award) {
-          router.push('/management/main/award');
+        if (data.poster) {
+          router.push(`/management/campus/poster?campus=${ campus }`);
         }
         else {
           alert('Permission denied : 요청 거부됨')
@@ -46,19 +54,19 @@ const AwardAdd = () => {
 
   return (
     <div>
-      <Title>어워드 추가</Title>
+      <Title>포스터 추가</Title>
       <Content>
         <TopBackLay />
         <div style={ styleLayD }>
           <div style={ styleLayDTop }>
             <TopFlexText>제목</TopFlexText>
-            <TopFlexSaved token={ regExpTest.awardName(name) } />
+            <TopFlexSaved token={ regExpTest.posterTitle(title) } />
           </div>
           <TopInput
-            value={ name }
+            value={ title }
             onChange={ (x) => {
               if (RegExp("^.{0,30}$").test(x)) {
-                setName(x)
+                setTitle(x)
               }
             } }
           />
@@ -66,13 +74,27 @@ const AwardAdd = () => {
         <div style={ styleLayD }>
           <div style={ styleLayDTop }>
             <TopFlexText>내용</TopFlexText>
-            <TopFlexSaved token={ regExpTest.awardContent(content) } />
+            <TopFlexSaved token={ regExpTest.posterContent(content) } />
           </div>
           <TopInput
             value={ content }
             onChange={ (x) => {
               if (RegExp("^.{0,50}$").test(x)) {
                 setContent(x)
+              }
+            } }
+          />
+        </div>
+        <div style={ styleLayD }>
+          <div style={ styleLayDTop }>
+            <TopFlexText>Url</TopFlexText>
+            <TopFlexSaved token={ regExpTest.posterLink(link) } />
+          </div>
+          <TopInput
+            value={ link }
+            onChange={ (x) => {
+              if (RegExp("^.{0,100}$").test(x)) {
+                setLink(x)
               }
             } }
           />
@@ -89,12 +111,12 @@ const AwardAdd = () => {
             lineHeight: '32px',
             color: 'gray'
           }}>
-            어워드는 비공개 상태로 추가됩니다. 수정에서 이를 변경하세요.
+            포스터는 비공개 상태로 추가됩니다. 수정에서 이를 변경하세요.
           </div>
           <TopFlexBtn
             onClick={ onAdd }
           >
-            어워드 추가
+            포스터 추가
           </TopFlexBtn>
         </div>
       </Content>
@@ -102,4 +124,4 @@ const AwardAdd = () => {
   )
 }
 
-export default AwardAdd
+export default PosterAdd;

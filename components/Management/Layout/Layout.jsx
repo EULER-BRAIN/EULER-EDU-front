@@ -22,7 +22,7 @@ const Layout = (props) => {
               { name: '갤러리', link: '/management/main/gallery' },
               { name: '어워드', link: '/management/main/award' },
               { name: '오일러BOOKS', link: '/management/main/books' },
-              { name: '오일러BLOG', link: '/management/main/blog' },
+              //{ name: '오일러BLOG', link: '/management/main/blog' },
             ]
           });
           list.push({
