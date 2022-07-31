@@ -7,6 +7,7 @@ import useCompWidth from '@components/Layout/useCompWidth'
 import Layout from './Layout'
 import Gallery from './Gallery'
 import NoticeTable from '@components/Notice/NoticeTable'
+import PosterMainItem from '@components/Poster/PosterMainItem'
 import Footer from '@components/Footer/Footer'
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
 import getS3ImgUrl from '@tools/getS3ImgUrl'
@@ -14,7 +15,6 @@ import LoadingDiv from '@components/Layout/Loading'
 import axiosEDU from '@tools/axiosEDU'
 
 import { FcPhone, FcGraduationCap } from 'react-icons/fc'
-import { MdSchedule } from 'react-icons/md';
 
 const Notice = (props) => {
   return (
@@ -29,48 +29,16 @@ const Notice = (props) => {
   )
 }
 
-const PosterItem = (props) => {
-  const style = {
-    width: '200px',
-    height: '280px',
-    overflow: 'hidden',
-    border: '1px solid rgb(206, 206, 206)',
-    borderRadius: '10px'
-  }
-  const styleImgCont = {
-    width: '200px',
-    height: '200px',
-    background: 'rgb(200,200,200)'
-  }
-  const styleTitle = {
-    paddingLeft: '10px', paddingRight: '10px',
-    paddingTop: '10px'
-  }
-  const styleContent = {
-    paddingLeft: '10px', paddingRight: '10px',
-    paddingTop: '5px',
-    fontSize: '14px',
-    color: 'rgb(100,100,100)'
-  }
-  return (
-    <div
-      style={ style }
-    >
-      <div style={ styleImgCont }>
-      </div>
-      <div
-        style={ styleTitle }
-      >Title</div>
-      <div style={ styleContent }>Content</div>
-    </div>
-  )
-}
-const Posters = () => {
-  const posterList = [
-  <PosterItem key={ 0 } />,
-  <PosterItem key={ 1 } />,
-  <PosterItem key={ 2 } />
-];
+const Posters = (props) => {
+  const posterList = props.posters.map((item, index) => (
+    <PosterMainItem
+      key={ index }
+      id={ item._id }
+      title={ item.title }
+      content={ item.content }
+      link={ item.link }
+    />
+  ));
 
   return (
     <div>
@@ -258,20 +226,22 @@ const Maps = (props) => {
 
 const Main = ({ id }) => {
   const [dateNow, setDateNow] = useState(null);
-  const [notices, setNotices] = useState(null);
+  const [notices, setNotices] = useState([]);
+  const [posters, setPosters] = useState([]);
   const [mapInfo, setMapInfo] = useState({});
   useEffect(() => {
     if (id) {
       axiosEDU.get(`/main/${ id }`).then(({ data }) => {
         if (data.campus) {
           setNotices(data.notices);
+          setPosters(data.posters);
           setMapInfo({
             address: data.campus.address,
             call: data.campus.call,
             lat: data.campus.lat,
             lng: data.campus.lng,
             naverMapUrl: undefined
-          })
+          });
           setDateNow(data.dateNow)
         }
         else {
@@ -299,7 +269,11 @@ const Main = ({ id }) => {
               dateNow={ dateNow }
             />
             <Layout.SandwichLine />
-            <Posters />
+            <Posters
+              campus={ id }
+              posters={ posters }
+              dateNow={ dateNow }
+            />
             <Layout.SandwichLine />
             <Maps
               id={ id }
