@@ -39,6 +39,7 @@ const PosterMainItem = (props) => {
             src={ getS3ImgUrl(`posters/${ props.id }`) }
             width={ 200 }
             height={ 200 }
+            alt={ `posters/${ props.id }` }
           />
         </div>
         <div

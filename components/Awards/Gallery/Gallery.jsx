@@ -106,13 +106,16 @@ const Award = (props) => {
 
 const Gallery = ({ id }) => {
   const [awards, setAwards] = useState({});
+  const idRef = useRef();
+
   useEffect(() => {
-    if (awards) setAwards(undefined);
+    if (awards && id) setAwards(undefined);
   }, [id])
   useEffect(() => {
     if (!awards && id) {
+      idRef.current = id;
       axiosEDU.get(`/main/award/content/${ id }`).then(({ data }) => {
-        if (data.award) {
+        if (data.award?._id === idRef.current) {
           setAwards({
             prev: data.awardPrev,
             current: data.award,
