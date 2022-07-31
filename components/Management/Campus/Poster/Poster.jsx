@@ -44,6 +44,14 @@ const PosterTableItem = (props) => {
             >포스터 비공개</TopFlexTag>
           )
         }
+        {
+          props.isImg ? null : (
+            <TopFlexTag
+              tagName="S3"
+              background="rgba(194,21,28,0.5)"
+            >이미지 없음</TopFlexTag>
+          )
+        }
         <TopFlexTag
           tagName="작성자"
           background="#81c147"
@@ -100,6 +108,7 @@ const PosterTable = (props) => {
             author={ item.author }
             registDate={ item.registDate }
             isShow={ item.isShow }
+            isImg={ item.isImg }
             campus={ props.campus }
           />
         ))
