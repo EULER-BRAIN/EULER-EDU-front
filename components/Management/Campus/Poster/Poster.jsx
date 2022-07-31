@@ -41,7 +41,7 @@ const PosterTableItem = (props) => {
             <TopFlexTag
               tagName="숨김"
               background="rgba(194,21,28,0.5)"
-            >공지 비공개</TopFlexTag>
+            >포스터 비공개</TopFlexTag>
           )
         }
         <TopFlexTag
@@ -100,6 +100,7 @@ const PosterTable = (props) => {
             author={ item.author }
             registDate={ item.registDate }
             isShow={ item.isShow }
+            campus={ props.campus }
           />
         ))
       }

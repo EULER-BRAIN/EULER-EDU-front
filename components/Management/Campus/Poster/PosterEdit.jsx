@@ -5,10 +5,10 @@ import LoadingDiv from "@components/Layout/Loading";
 import { Content, Title, TopBackLay, TopFlexBtn, TopFlexSaved, TopFlexText, TopInput } from "@components/ParentSystem/Layout/LSet";
 import axiosEDU from "@tools/axiosEDU";
 import axios from "axios";
-import { date2Str } from "@tools/trans";
+import { useCampusOnManagement } from "@tools/useSystemProp";
+import convertImg from "@tools/convertImg";
 import getS3ImgUrl from "@tools/getS3ImgUrl";
 import regExpTest from "@tools/regExpTest";
-import convertImg from "@tools/convertImg";
 
 const S3Image = (props) => {
   const styleLayDBtm = {
@@ -32,9 +32,10 @@ const S3Image = (props) => {
       }
 
       onCall.current = true;
-      axiosEDU.post('/management/main/award/img/upload',{
+      axiosEDU.post('/management/campus/poster/img/upload',{
         id: props.id,
-        type: imageAfter.type
+        type: imageAfter.type,
+        campus: props.campus
       }).then(async ({ data }) => {
         if (data.url && data.fields) {
           try {
@@ -69,9 +70,12 @@ const S3Image = (props) => {
   const onDelete = () => {
     if (!onCall.current) {
       onCall.current = true;
-      axiosEDU.get(`/management/main/award/img/delete/${ props.id }`).then(({ data }) => {
+      axiosEDU.post('/management/campus/poster/img/delete', {
+        id: props.id,
+        campus: props.campus
+      }).then(({ data }) => {
         onCall.current = false;
-        if (data.award) {
+        if (data.poster) {
           alert('이미지가 성공적으로 삭제되었습니다')
           router.reload();
         }
@@ -92,8 +96,8 @@ const S3Image = (props) => {
             background: 'rgb(200,200,200)'
           }}>
             <Image
-              src={ getS3ImgUrl(`awards/${ props.id }`) }
-              alt={ `awards/${ props.id }` }
+              src={ getS3ImgUrl(`posters/${ props.id }`) }
+              alt={ `posters/${ props.id }` }
               width={ 200 }
               height={ 200 }
             />
@@ -105,7 +109,7 @@ const S3Image = (props) => {
               fontSize: '14px',
               color: 'gray'
             }}>
-              S3에 &quot;{ props.id }&quot;에 해댱하는 이미지가 없습니다.
+              S3에 &quot;{ props.id }&quot;에 해당하는 이미지가 없습니다.
             </div>
             <input
               type="file"
@@ -139,17 +143,18 @@ const S3Image = (props) => {
   )
 }
 
-const AwardEdit = (props) => {
-  const [award, setAward] = useState(null);
+const PosterEdit = (props) => {
+  const campus = useCampusOnManagement();
+  const [poster, setPoster] = useState(null);
   const [imgFound, setImgFound] = useState();
   const [inputValue, setInputValue] = useState({});
 
   useEffect(() => {
-    axiosEDU.get(`/management/main/award/info/${ props.id }`).then(({ data }) => {
-      if (data.award) {
-        setAward(data.award);
+    axiosEDU.get(`/management/campus/poster/info/${ props.id }`).then(({ data }) => {
+      if (data.poster) {
+        setPoster(data.poster);
         setImgFound(data.imgFound);
-        setInputValue(data.award);
+        setInputValue(data.poster);
       } 
       else {
         // FIXME
@@ -173,22 +178,23 @@ const AwardEdit = (props) => {
     gap: '5px'
   }
 
-  const router = useRouter();
   const onCall = useRef();
-  const onClickName = () => {
-    const name = inputValue.name;
-    if (!regExpTest.awardName(name)) {
-      return alert(regExpTest.awardName.toString()+' 을 만족해야 합니다')
+  const router = useRouter();
+  const onClickTitle = () => {
+    const title = inputValue.title;
+    if (!regExpTest.posterTitle(title)) {
+      return alert(regExpTest.posterTitle.toString()+' 을 만족해야 합니다')
     }
     if (!onCall.current) {
       onCall.current = true;
-      axiosEDU.post('/management/main/award/edit/name', {
+      axiosEDU.post('/management/campus/poster/edit/title', {
+        campus: campus,
         id: props.id,
-        name: name
+        title: title,
       }).then(({ data }) => {
         onCall.current = false;
-        if (data.award) {
-          setAward(data.award);
+        if (data.poster) {
+          setPoster(data.poster);
         } else {
           alert('Permission denied : 요청 거부됨')
         }
@@ -197,34 +203,57 @@ const AwardEdit = (props) => {
   }
   const onClickContent = () => {
     const content = inputValue.content;
-    if (!regExpTest.awardContent(content)) {
-      return alert(regExpTest.awardContent.toString()+' 을 만족해야 합니다')
+    if (!regExpTest.posterContent(content)) {
+      return alert(regExpTest.posterContent.toString()+' 을 만족해야 합니다')
     }
     if (!onCall.current) {
       onCall.current = true;
-      axiosEDU.post('/management/main/award/edit/content', {
+      axiosEDU.post('/management/campus/poster/edit/content', {
+        campus: campus,
         id: props.id,
-        content: content
+        content: content,
       }).then(({ data }) => {
         onCall.current = false;
-        if (data.award) {
-          setAward(data.award);
+        if (data.poster) {
+          setPoster(data.poster);
         } else {
           alert('Permission denied : 요청 거부됨')
         }
       })
     }
   }
-  const onClickIsShow = (isShow) => () => {
+  const onClickLink = () => {
+    const link = inputValue.link;
+    if (!regExpTest.posterLink(link)) {
+      return alert(regExpTest.posterLink.toString()+' 을 만족해야 합니다')
+    }
     if (!onCall.current) {
       onCall.current = true;
-      axiosEDU.post('/management/main/award/edit/isShow', {
+      axiosEDU.post('/management/campus/poster/edit/link', {
+        campus: campus,
         id: props.id,
-        isShow: isShow
+        link: link,
       }).then(({ data }) => {
         onCall.current = false;
-        if (data.award) {
-          setAward(data.award);
+        if (data.poster) {
+          setPoster(data.poster);
+        } else {
+          alert('Permission denied : 요청 거부됨')
+        }
+      })
+    }
+  }
+  const onClickIsShow = (value) => {
+    if (!onCall.current) {
+      onCall.current = true;
+      axiosEDU.post('/management/campus/poster/edit/isShow', {
+        campus: campus,
+        id: props.id,
+        isShow: value,
+      }).then(({ data }) => {
+        onCall.current = false;
+        if (data.poster) {
+          setPoster(data.poster);
         } else {
           alert('Permission denied : 요청 거부됨')
         }
@@ -234,11 +263,14 @@ const AwardEdit = (props) => {
   const onClickDelete = () => {
     if (!onCall.current) {
       onCall.current = true;
-      axiosEDU.get(`/management/main/award/delete/${ props.id }`).then(({ data }) => {
+      axiosEDU.post('/management/campus/poster/delete', {
+        id: props.id,
+        campus: campus,
+      }).then(({ data }) => {
         onCall.current = false;
         if (data.result) {
-          alert('해당 어워드가 삭제되었습니다')
-          router.replace('/management/main/award');
+          alert('해당 포스터가 삭제되었습니다')
+          router.replace(`/management/campus/poster?campus=${ campus }`);
         }
         else {
           alert('Permission denied : 요청 거부됨')
@@ -249,10 +281,10 @@ const AwardEdit = (props) => {
 
   return (
     <div>
-      <Title>어워드 수정</Title>
+      <Title>포스터 수정</Title>
       <Content>
         {
-          award ? (
+          poster ? (
             <div>
               <TopBackLay />
               { /*<div style={ styleLayD }>
@@ -260,35 +292,43 @@ const AwardEdit = (props) => {
                   <TopFlexText>ID</TopFlexText>
                 </div>
                 <TopInput
-                  value={ award._id }
+                  value={ poster._id }
                 />
-              </div>*/ }
+              </div>
+              <div style={ styleLayD }>
+                <div style={ styleLayDTop }>
+                  <TopFlexText>작성자</TopFlexText>
+                </div>
+                <TopInput
+                  value={ poster.author?.name }
+                />
+              </div> */ }
               <div style={ styleLayD }>
                 <div style={ styleLayDTop }>
                   <TopFlexText>제목</TopFlexText>
-                  <TopFlexSaved token={ award.name === inputValue.name } />
+                  <TopFlexSaved token={ poster.title === inputValue.title } />
                 </div>
                 <TopInput
-                  value={ inputValue.name }
+                  value={ inputValue.title }
                   onChange={ (x) => {
                     if (RegExp("^.{0,30}$").test(x)) {
                       setInputValue({
                         ...inputValue,
-                        name: x
+                        title: x
                       })
                     }
                   } }
                 />
                 <div style={ styleLayDBtm }>
                   <TopFlexBtn
-                    onClick={ onClickName }
+                    onClick={ onClickTitle }
                   >제목 수정</TopFlexBtn>
                 </div>
               </div>
               <div style={ styleLayD }>
                 <div style={ styleLayDTop }>
                   <TopFlexText>내용</TopFlexText>
-                  <TopFlexSaved token={ award.content === inputValue.content } />
+                  <TopFlexSaved token={ poster.content === inputValue.content } />
                 </div>
                 <TopInput
                   value={ inputValue.content }
@@ -309,17 +349,39 @@ const AwardEdit = (props) => {
               </div>
               <div style={ styleLayD }>
                 <div style={ styleLayDTop }>
-                  <TopFlexText>공개 여부</TopFlexText>
+                  <TopFlexText>Url</TopFlexText>
+                  <TopFlexSaved token={ poster.link === inputValue.link } />
                 </div>
                 <TopInput
-                  value={ award.isShow ? '공개' : '비공개' }
+                  value={ inputValue.link }
+                  onChange={ (x) => {
+                    if (RegExp("^.{0,100}$").test(x)) {
+                      setInputValue({
+                        ...inputValue,
+                        link: x
+                      })
+                    }
+                  } }
                 />
                 <div style={ styleLayDBtm }>
                   <TopFlexBtn
-                    onClick={ onClickIsShow(true) }
+                    onClick={ onClickLink }
+                  >Url 수정</TopFlexBtn>
+                </div>
+              </div>
+              <div style={ styleLayD }>
+                <div style={ styleLayDTop }>
+                  <TopFlexText>공개 여부</TopFlexText>
+                </div>
+                <TopInput
+                  value={ poster.isShow ? '공개' : '비공개' }
+                />
+                <div style={ styleLayDBtm }>
+                  <TopFlexBtn
+                    onClick={ () => onClickIsShow(true) }
                   >공개로 수정</TopFlexBtn>
                   <TopFlexBtn
-                    onClick={ onClickIsShow(false) }
+                    onClick={ () => onClickIsShow(false) }
                   >비공개로 수정</TopFlexBtn>
                 </div>
               </div>
@@ -328,7 +390,7 @@ const AwardEdit = (props) => {
                   <TopFlexText>등록 날짜</TopFlexText>
                 </div>
                 <TopInput
-                  value={ date2Str(award.registDate) }
+                  value={ date2Str(poster.registDate) }
                 />
               </div>*/ }
               <div style={ styleLayD }>
@@ -336,18 +398,19 @@ const AwardEdit = (props) => {
                   <TopFlexText>S3 이미지</TopFlexText>
                 </div>
                 <S3Image
-                  id={ award._id }
+                  id={ poster._id }
                   exist={ imgFound }
+                  campus={ campus }
                 />
               </div>
               <div style={ styleLayD }>
                 <div style={ styleLayDTop }>
-                  <TopFlexText>어워드 삭제</TopFlexText>
+                  <TopFlexText>포스터 삭제</TopFlexText>
                 </div>
                 <div style={ styleLayDBtm }>
                   <TopFlexBtn
                     onClick={ onClickDelete }
-                  >어워드 삭제</TopFlexBtn>
+                  >포스터 삭제</TopFlexBtn>
                 </div>
               </div>
             </div>
@@ -363,4 +426,4 @@ const AwardEdit = (props) => {
   )
 }
 
-export default AwardEdit
+export default PosterEdit;
