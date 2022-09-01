@@ -6,6 +6,7 @@ import Navigation from './Navigation/Navigation';
 import axiosEDU from '@tools/axiosEDU';
 
 import svgLogo from "@public/eulerLogo/logo.svg";
+import svgLogoText from "@public/eulerLogo/logo.text.black.svg";
 import { MdMenu } from 'react-icons/md';
 
 const Header = () => {
@@ -23,7 +24,20 @@ const Header = () => {
   const styleLogo = {
     position: 'absolute',
     top: '10px', left: '10px',
-    height: '30px'
+    width: '133px', height: '30px',
+  }
+  const styleLogoBody = {
+    display: 'flex',
+    width: '133px', height: '30px',
+    gap: '3px'
+  }
+  const styleLogoBodyLogo = {
+    width: '30px', height: '30px',
+    position: 'relative'
+  }
+  const styleLogoBodyText = {
+    width: '100px', height: '30px',
+    position: 'relative'
   }
   const styleNavi = {
     position: 'absolute',
@@ -53,11 +67,23 @@ const Header = () => {
       <div style={ style }>
         <div style={ styleLogo }>
           <Link to="/">
-            <Image
-              src={ svgLogo } alt="EULER EDU"
-              quality={ 100 }
-              width={ 30 } height={ 30 }
-            />
+            <div style={ styleLogoBody }>
+              <div style={ styleLogoBodyLogo }>
+                <Image
+                  src={ svgLogo }
+                  alt="EULER EDU"
+                  quality={ 100 }
+                  layout="fill"
+                />
+              </div>
+              <div style={ styleLogoBodyText }>
+                <Image
+                  src={ svgLogoText }
+                  alt="EULER EDU"
+                  layout="fill"
+                />
+              </div>
+            </div>
           </Link>
         </div>
         <div
